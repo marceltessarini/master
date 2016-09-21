@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.marceltessarini.lojavirtual.rs.model.Categoria;
 import com.marceltessarini.lojavirtual.rs.model.Categorias;
@@ -29,7 +30,7 @@ public class CategoriasApiController implements CategoriasApi {
 	}
 
 	@Override
-	public ResponseEntity<Void> categoriasPost(@Valid Categoria body) {
+	public ResponseEntity<Void> categoriasPost(@Valid @RequestBody Categoria body) {
 		return categoriaApiService.salvar(body);
 	}
 

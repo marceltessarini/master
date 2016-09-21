@@ -23,9 +23,17 @@ import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Errors;
 
+// TODO comentar a classe e retornar erro http 500 no final para todos caso algo sai do controle.
+
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
+	/**
+	 * Trata as exceção lançadas pela API.
+	 * @param ex Exceção lançada pela API.
+	 * @param request
+	 * @return Mensagem de erro.
+	 */
 	@ExceptionHandler({ QueryStringException.class, ApiSecurityException.class, GenericApiException.class })
 	public final ResponseEntity<Object> handleApiException(Exception ex, WebRequest request) {
 		ResponseEntity<Object> response;

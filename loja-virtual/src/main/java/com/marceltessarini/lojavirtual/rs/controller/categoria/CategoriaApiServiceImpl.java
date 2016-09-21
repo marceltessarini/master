@@ -178,9 +178,15 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 
 	@Override
 	public ResponseEntity<Void> salvar(Categoria categoria) {
-		// TODO Auto-generated method stub
+		validarSalvarCategoria(categoria);
+		// TODO retornar o id no response
 		
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+
+	private void validarSalvarCategoria(Categoria categoria) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

@@ -2,7 +2,8 @@ package com.marceltessarini.lojavirtual.rs.model;
 
 import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,8 +23,6 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-09-19T11:35:00.727-03:00")
 
 public class Categoria   {
-  @JsonProperty("descricao")
-  private String descricao = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -32,8 +31,13 @@ public class Categoria   {
   private Long idCategoria = null;
 
   @JsonProperty("nome")
-  @NotNull(message = "{CATEGORIA_001_001}")
+  @NotBlank(message = "CATEGORIA_001_001")
+  @Length(max = 500, message = "CATEGORIA_001_002")
   private String nome = null;
+
+  @JsonProperty("descricao")
+  @NotBlank(message = "CATEGORIA_001_003")
+  private String descricao = null;
 
   @JsonProperty("status")
   private String status = null;
