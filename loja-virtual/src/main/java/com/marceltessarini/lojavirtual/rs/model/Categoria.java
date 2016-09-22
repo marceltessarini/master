@@ -2,6 +2,8 @@ package com.marceltessarini.lojavirtual.rs.model;
 
 import java.util.Objects;
 
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 

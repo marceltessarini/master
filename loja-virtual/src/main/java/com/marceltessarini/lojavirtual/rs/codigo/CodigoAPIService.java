@@ -213,34 +213,21 @@ public class CodigoAPIService {
 			tipo = "CategoriaException";
 			break;
 
-			case CATEGORIA_001_005:
+
+
+		case CATEGORIA_001_005:
 			codigoHttp = 400;
 			codigoDaAPI = "001.005";
-			mensagem = "Campo idCategoria deve ser numérico.";
+			mensagem = "Campo status deve ser ATIVO, INATIVO ou TODOS.";
 			tipo = "CategoriaException";
 			break;
 
-			case CATEGORIA_001_006:
-			codigoHttp = 400;
+		case CATEGORIA_001_006:
+			codigoHttp = 422;
 			codigoDaAPI = "001.006";
-			mensagem = "O campo id deve ser numérico.";
+			mensagem = "Já existe uma categoria com o nome informado.";
 			tipo = "CategoriaException";
 			break;
-
-			// TODO rever
-//		case CATEGORIA_001_005:
-//			codigoHttp = "400";
-//			codigoDaAPI = "001.005";
-//			mensagem = "Campo status deve ser ATIVO, INATIVO ou TODOS.";
-//			tipo = "CategoriaException";
-//			break;
-//
-//		case CATEGORIA_001_006:
-//			codigoHttp = "422";
-//			codigoDaAPI = "001.006";
-//			mensagem = "Já existe uma categoria com o nome informado.";
-//			tipo = "CategoriaException";
-//			break;
 
 		// ProdutoException
 		case PRODUTO_002_001:

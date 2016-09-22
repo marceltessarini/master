@@ -67,14 +67,9 @@ public class Errors   {
   }
 
   @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Errors {\n");
-    
-    sb.append("    errors: ").append(toIndentedString(errors)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+public String toString() {
+	return "Errors [errors=" + errors + "]";
+}
 
   /**
    * Convert the given object to string with each line indented by 4 spaces

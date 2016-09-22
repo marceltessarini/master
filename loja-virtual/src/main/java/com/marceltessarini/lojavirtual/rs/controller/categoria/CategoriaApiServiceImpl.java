@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
+import com.marceltessarini.lojavirtual.rs.exception.CategoriaException;
 import com.marceltessarini.lojavirtual.rs.exception.GenericApiException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
 import com.marceltessarini.lojavirtual.rs.model.Categoria;
@@ -179,16 +180,61 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 	@Override
 	public ResponseEntity<Void> salvar(Categoria categoria) {
 		validarSalvarCategoria(categoria);
-		// TODO retornar o id no response
+		// TODO retornar o id no response e tratar Exception
 		
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 
 	private void validarSalvarCategoria(Categoria categoria) {
-		// TODO Auto-generated method stub
+		Long idCategoria = categoria.getIdCategoria();
+		String status = categoria.getStatus();
+		String nome = categoria.getNome();
+
+		Erro erroIdCategoriaInvalido = null;
+		Erro erroStatusInvalido = null;
+		Erro erroNomeCategoriaJaExiste = null;
+
+		// ------------------- FAKE simulando categoria invalida ------------------------------
 		
+		// simulando id categoria que não existe.
+		if (idCategoria != null && idCategoria == 100) {
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.CATEGORIA_001_004;
+			erroIdCategoriaInvalido = CodigoAPIService.criarErro(chaveErro, parametros);
+			
+		}
+		
+		// simulando um nome de categoria que já existe
+		if ("ferramentas".equals(nome)) {
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.CATEGORIA_001_006;
+			erroNomeCategoriaJaExiste = CodigoAPIService.criarErro(chaveErro, parametros);
+		}
+		// ------------------------------------------------------------------------------------
+		
+		if (!isStatusValido(status)) {
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.CATEGORIA_001_005;
+			erroStatusInvalido = CodigoAPIService.criarErro(chaveErro, parametros);
+		}
+		
+		List<Erro> itensErro = new ArrayList<>();
+	
+		if (erroIdCategoriaInvalido != null) {
+			itensErro.add(erroIdCategoriaInvalido);
+		}
+
+		if (erroStatusInvalido != null) {
+			itensErro.add(erroStatusInvalido);
+		}
+		
+		if (erroNomeCategoriaJaExiste != null) {
+			itensErro.add(erroNomeCategoriaJaExiste);
+		}
+		
+		CategoriaException.lancarSeTiverErros(itensErro);
+		
+
 	}
-
-
 
 }

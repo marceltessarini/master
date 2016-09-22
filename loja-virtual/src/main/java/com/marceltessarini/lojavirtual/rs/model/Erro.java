@@ -125,17 +125,10 @@ public class Erro   {
   }
 
   @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Erro {\n");
-    
-    sb.append("    codigoDaAPI: ").append(toIndentedString(codigoDaAPI)).append("\n");
-    sb.append("    codigoHttp: ").append(toIndentedString(codigoHttp)).append("\n");
-    sb.append("    mensagem: ").append(toIndentedString(mensagem)).append("\n");
-    sb.append("    tipo: ").append(toIndentedString(tipo)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+public String toString() {
+	return "Erro [codigoDaAPI=" + codigoDaAPI + ", codigoHttp=" + codigoHttp + ", mensagem=" + mensagem + ", tipo="
+			+ tipo + "]";
+}
 
   /**
    * Convert the given object to string with each line indented by 4 spaces

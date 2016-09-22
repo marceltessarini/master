@@ -34,5 +34,10 @@ public abstract class AbstractAPIRuntimeException extends RuntimeException {
 		return filtrado;
 	}
 
+	@Override
+	public String toString() {
+		return "AbstractAPIRuntimeException [errors=" + errors + "]";
+	}
+
 
 }
