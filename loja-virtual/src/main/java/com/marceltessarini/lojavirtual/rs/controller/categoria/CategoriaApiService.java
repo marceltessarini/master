@@ -12,5 +12,7 @@ public interface CategoriaApiService {
 	ResponseEntity<Void> salvar(Categoria categoria);
 	
 	ResponseEntity<Categoria> getCategoria(Long idCategoria);
+
+	ResponseEntity<Void> deleteCategoria(Long idCategoria);
 	
 }

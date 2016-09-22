@@ -284,5 +284,21 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 		ApiSecurityException.lancarSeTiverErros(itensErro);
 	}
 
-
+	@Override
+	public ResponseEntity<Void> deleteCategoria(Long idCategoria) {
+		try {
+			// --------------------------------------------
+			// Fake
+			simularProblemasComCategoria(idCategoria);
+			// ----------------------------------------------
+			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+		} catch (ApiSecurityException e) {
+			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
+			throw e;
+		} catch (Exception e) {
+			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
+			throw ex;
+		}
+	}
+	
 }

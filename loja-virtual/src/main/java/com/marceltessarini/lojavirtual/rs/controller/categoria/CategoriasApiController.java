@@ -39,9 +39,9 @@ public class CategoriasApiController implements CategoriasApi {
 	}
 
 	@Override
-	public ResponseEntity<Void> categoriasIdCategoriaDelete(Long idCategoria) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Void> categoriasIdCategoriaDelete(
+			@ApiParam(value = "Identificador da Categoria.", required = true) @PathVariable("idCategoria") Long idCategoria) {
+		return categoriaApiService.deleteCategoria(idCategoria);
 	}
 
 	@Override
