@@ -244,4 +244,45 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 
 	}
 
+	@Override
+	public ResponseEntity<Categoria> getCategoria(Long idCategoria) {
+		try {
+			// ----------------------------------------
+			simularProblemasComCategoria(idCategoria);
+			// Fake
+			Categoria c2 = criarCategoria(2L, 1L, "Livros de TI", "ATIVO", "Categoria Livros de TI");
+			// -----------------------------------------
+			
+			return new ResponseEntity<Categoria>(c2, HttpStatus.OK);
+		} catch (ApiSecurityException e) {
+			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
+			throw e;
+		} catch (Exception e) {
+			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
+			throw ex;
+		}
+	}
+	
+	private void simularProblemasComCategoria(Long numeroCategoria) throws ApiSecurityException {
+		List<Erro> itensErro = new ArrayList<>();
+		// Simulando problemas com segurança!
+		if (numeroCategoria == 403) {
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.HTTP_403_201;
+			Erro erro403 = CodigoAPIService.criarErro(chaveErro, parametros);
+			itensErro.add(erro403);
+			
+		}
+		
+		if (numeroCategoria == 401) {
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.HTTP_401_201;
+			Erro erro401 = CodigoAPIService.criarErro(chaveErro, parametros);
+			itensErro.add(erro401);
+		}
+		
+		ApiSecurityException.lancarSeTiverErros(itensErro);
+	}
+
+
 }

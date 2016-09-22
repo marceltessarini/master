@@ -160,6 +160,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 			Erro erro = CodigoAPIService.criarErro(chave, parametros);
 			errors.add(erro);
 		}
+		
+		if ("idCategoria".equals(nomeParametro)) {
+			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_400_302;
+			String[] parametros = {"idCategoria"};
+			Erro erro = CodigoAPIService.criarErro(chave, parametros);
+			errors.add(erro);
+		}
 			
 		if (!errors.isEmpty()) {
 			return new ResponseEntity<Object>(erroWrapper, HttpStatus.BAD_REQUEST);

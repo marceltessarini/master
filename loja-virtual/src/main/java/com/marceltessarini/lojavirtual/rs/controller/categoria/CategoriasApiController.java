@@ -3,12 +3,16 @@ package com.marceltessarini.lojavirtual.rs.controller.categoria;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.marceltessarini.lojavirtual.rs.model.Categoria;
 import com.marceltessarini.lojavirtual.rs.model.Categorias;
+
+import io.swagger.annotations.ApiParam;
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-09-19T11:35:00.727-03:00")
@@ -41,9 +45,9 @@ public class CategoriasApiController implements CategoriasApi {
 	}
 
 	@Override
-	public ResponseEntity<Categoria> categoriasIdCategoriaGet(Long idCategoria) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Categoria> categoriasIdCategoriaGet(
+			@ApiParam(value = "Identificador da Categoria.", required = true) @PathVariable("idCategoria") Long idCategoria) {
+		return categoriaApiService.getCategoria(idCategoria);
 	}
 
 	@Override
