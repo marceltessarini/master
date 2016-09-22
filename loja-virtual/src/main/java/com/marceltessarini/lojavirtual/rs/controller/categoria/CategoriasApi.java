@@ -1,9 +1,7 @@
 package com.marceltessarini.lojavirtual.rs.controller.categoria;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,7 +30,7 @@ public interface CategoriasApi {
 			@ApiResponse(code = 401, message = "Requisição requer autenticação.", response = Categorias.class),
 			@ApiResponse(code = 403, message = "Requisição negada.", response = Categorias.class) })
 	@RequestMapping(value = "/categorias", produces = { "application/json" }, method = RequestMethod.GET)
-	default ResponseEntity<Categorias> categoriasGet(
+	ResponseEntity<Categorias> categoriasGet(
 			@ApiParam(value = "Número da página.", required = true) @RequestParam(value = "page", required = true) Long page
 
 			,
@@ -50,10 +48,7 @@ public interface CategoriasApi {
 			,
 			@ApiParam(value = "Recebe o(s) nome(s) do(s) campo(s) da categoria  a ser ordenado. Campos disponível são: nomeCategoria.") @RequestParam(value = "order", required = false) String order
 
-	) {
-		// do some magic!
-		return new ResponseEntity<Categorias>(HttpStatus.OK);
-	}
+	);
 
 	@ApiOperation(value = "Operação utilizada para inativar a categoria informada.", notes = "Operação utilizada para inativar a categoria informada.", response = Void.class, tags = {
 			"Categorias", })
@@ -63,13 +58,10 @@ public interface CategoriasApi {
 			@ApiResponse(code = 401, message = "Requisição requer autenticação.", response = Void.class),
 			@ApiResponse(code = 403, message = "Requisição negada.", response = Void.class) })
 	@RequestMapping(value = "/categorias/{idCategoria}", method = RequestMethod.DELETE)
-	default ResponseEntity<Void> categoriasIdCategoriaDelete(
+	ResponseEntity<Void> categoriasIdCategoriaDelete(
 			@ApiParam(value = "Identificador da Categoria.", required = true) @PathVariable("idCategoria") Long idCategoria
 
-	) {
-		// do some magic!
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
+	);
 
 	@ApiOperation(value = "Operação utilizada para consultar a categoria informada.", notes = "Operação utilizada para consultar a categoria informada.", response = Categoria.class, tags = {
 			"Categorias", })
@@ -78,13 +70,10 @@ public interface CategoriasApi {
 			@ApiResponse(code = 401, message = "Requisição requer autenticação.", response = Categoria.class),
 			@ApiResponse(code = 403, message = "Requisição negada.", response = Categoria.class) })
 	@RequestMapping(value = "/categorias/{idCategoria}", produces = { "application/json" }, method = RequestMethod.GET)
-	default ResponseEntity<Categoria> categoriasIdCategoriaGet(
+	ResponseEntity<Categoria> categoriasIdCategoriaGet(
 			@ApiParam(value = "Identificador da Categoria.", required = true) @PathVariable("idCategoria") Long idCategoria
 
-	) {
-		// do some magic!
-		return new ResponseEntity<Categoria>(HttpStatus.OK);
-	}
+	);
 
 	@ApiOperation(value = "Operação utilizada para atualizar a categoria informada.", notes = "Operação utilizada para atualizar a categoria informada.", response = Void.class, tags = {
 			"Categorias", })
@@ -94,17 +83,14 @@ public interface CategoriasApi {
 			@ApiResponse(code = 403, message = "Requisição negada.", response = Void.class),
 			@ApiResponse(code = 422, message = "Exceções de negócio.", response = Void.class) })
 	@RequestMapping(value = "/categorias/{idCategoria}", consumes = { "application/json" }, method = RequestMethod.PUT)
-	default ResponseEntity<Void> categoriasIdCategoriaPut(
+	ResponseEntity<Void> categoriasIdCategoriaPut(
 			@ApiParam(value = "Identificador da Categoria.", required = true) @PathVariable("idCategoria") Long idCategoria
 
 			,
 
 			@ApiParam(value = "") @RequestBody Categoria body
 
-	) {
-		// do some magic!
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
+	);
 
 	@ApiOperation(value = "Operação utilizada para criar uma categoria.", notes = "Operação utilizada para criar uma categoria.", response = Void.class, tags = {
 			"Categorias", })
@@ -114,13 +100,10 @@ public interface CategoriasApi {
 			@ApiResponse(code = 403, message = "Requisição negada.", response = Void.class),
 			@ApiResponse(code = 422, message = "Exceções de negócio.", response = Void.class) })
 	@RequestMapping(value = "/categorias", consumes = { "application/json" }, method = RequestMethod.POST)
-	default ResponseEntity<Void> categoriasPost(
+	ResponseEntity<Void> categoriasPost(
 
 			@ApiParam(value = "") @Valid @RequestBody Categoria body
 
-	) {
-		// do some magic!
-		return new ResponseEntity<Void>(HttpStatus.OK);
-	}
+	);
 
 }

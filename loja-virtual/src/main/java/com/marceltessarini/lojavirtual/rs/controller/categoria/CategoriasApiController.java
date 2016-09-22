@@ -34,4 +34,22 @@ public class CategoriasApiController implements CategoriasApi {
 		return categoriaApiService.salvar(body);
 	}
 
+	@Override
+	public ResponseEntity<Void> categoriasIdCategoriaDelete(Long idCategoria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<Categoria> categoriasIdCategoriaGet(Long idCategoria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResponseEntity<Void> categoriasIdCategoriaPut(Long idCategoria, Categoria body) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
