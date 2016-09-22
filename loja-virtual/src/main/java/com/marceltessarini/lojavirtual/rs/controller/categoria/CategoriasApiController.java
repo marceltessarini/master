@@ -35,6 +35,7 @@ public class CategoriasApiController implements CategoriasApi {
 
 	@Override
 	public ResponseEntity<Void> categoriasPost(@Valid @RequestBody Categoria body) {
+		body.setId(null);
 		return categoriaApiService.salvar(body);
 	}
 
@@ -51,9 +52,11 @@ public class CategoriasApiController implements CategoriasApi {
 	}
 
 	@Override
-	public ResponseEntity<Void> categoriasIdCategoriaPut(Long idCategoria, Categoria body) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Void> categoriasIdCategoriaPut(
+			@ApiParam(value = "Identificador da Categoria.", required = true) @PathVariable("idCategoria") Long idCategoria,
+			@Valid @RequestBody Categoria body) {
+		body.setId(idCategoria);
+		return categoriaApiService.salvar(body);
 	}
 
 }

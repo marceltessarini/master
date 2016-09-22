@@ -177,12 +177,16 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 		try {
 			validarSalvarCategoria(categoria);
 			
-			// Fake!
-			String location = "/api/loja/v1/categorias/123";
-			
-			MultiValueMap<String, String> headers = new HttpHeaders();
-			headers.add("Location", location);
-			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+			Long id = categoria.getId();
+			if (id == null) {
+				// Adicionar
+				ResponseEntity<Void> responseAdicionar = adicionarCategoria(categoria);
+				return responseAdicionar;
+			} else {
+				// Atualizar
+				ResponseEntity<Void> responseAtualizar = atualizarCategoria(categoria);
+				return responseAtualizar;
+			}
 		} catch (CategoriaException e) {
 			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
 			throw e;
@@ -190,6 +194,19 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
 			throw ex;
 		}
+	}
+
+	private ResponseEntity<Void> atualizarCategoria(Categoria categoria) {
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	private ResponseEntity<Void> adicionarCategoria(Categoria categoria) {
+		// Fake!
+		String location = "/api/loja/v1/categorias/123";
+		
+		MultiValueMap<String, String> headers = new HttpHeaders();
+		headers.add("Location", location);
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 	private void validarSalvarCategoria(Categoria categoria) {
