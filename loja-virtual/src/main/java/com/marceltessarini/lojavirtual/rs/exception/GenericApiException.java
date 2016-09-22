@@ -3,6 +3,8 @@ package com.marceltessarini.lojavirtual.rs.exception;
 import java.util.Arrays;
 import java.util.List;
 
+import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
+import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 
 public class GenericApiException extends AbstractAPIRuntimeException {
@@ -23,6 +25,18 @@ public class GenericApiException extends AbstractAPIRuntimeException {
 			lancarSeTiverErros(erros);
 		}
 	}
+	
+	public static GenericApiException criarGenericApiExceptionComHttpStatus500() {
+		String[] parametros = null;
+		CodigoStatusAPI chave = CodigoStatusAPI.HTTP_500;
+		Erro erro = CodigoAPIService.criarErro(chave, parametros);
+
+		
+		GenericApiException ex = new GenericApiException();
+		ex.adicionarItemErro(erro);
+		return ex;
+	}
+
 
 
 }

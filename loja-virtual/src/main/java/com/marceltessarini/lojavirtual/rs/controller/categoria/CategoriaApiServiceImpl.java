@@ -5,9 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
@@ -45,18 +47,11 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
 			throw e;
 		} catch (Exception e) {
-			
-			String[] parametros = null;
-			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_500;
-			Erro erro = CodigoAPIService.criarErro(chave, parametros);
-
-			
-			GenericApiException ex = new GenericApiException();
-			ex.adicionarItemErro(erro);
+			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
 			throw ex;
 		}
 	}
-	
+
 	private void simularProblemasComSeguranca(String produto) {
 		List<Erro> itensErro = new ArrayList<>();
 		// Simulando problemas com segurança!
@@ -179,10 +174,22 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 
 	@Override
 	public ResponseEntity<Void> salvar(Categoria categoria) {
-		validarSalvarCategoria(categoria);
-		// TODO retornar o id no response e tratar Exception
-		
-		return new ResponseEntity<Void>(HttpStatus.CREATED);
+		try {
+			validarSalvarCategoria(categoria);
+			
+			// Fake!
+			String location = "/api/loja/v1/categorias/123";
+			
+			MultiValueMap<String, String> headers = new HttpHeaders();
+			headers.add("Location", location);
+			return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+		} catch (CategoriaException e) {
+			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
+			throw e;
+		} catch (Exception e) {
+			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
+			throw ex;
+		}
 	}
 
 	private void validarSalvarCategoria(Categoria categoria) {
