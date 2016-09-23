@@ -68,4 +68,10 @@ public class GetCategoriasRequest {
 		this.order = order;
 	}
 
+	@Override
+	public String toString() {
+		return "GetCategoriasRequest [page=" + page + ", limit=" + limit + ", status=" + status + ", nomeCategoria="
+				+ nomeCategoria + ", produto=" + produto + ", order=" + order + "]";
+	}
+
 }

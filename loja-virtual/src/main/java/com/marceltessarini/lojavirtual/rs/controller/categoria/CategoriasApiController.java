@@ -36,19 +36,22 @@ public class CategoriasApiController implements CategoriasApi {
 	@Override
 	public ResponseEntity<Void> categoriasPost(@Valid @RequestBody Categoria body) {
 		body.setId(null);
-		return categoriaApiService.salvar(body);
+		ResponseEntity<Void> response = categoriaApiService.salvar(body);
+		return response;
 	}
 
 	@Override
 	public ResponseEntity<Void> categoriasIdCategoriaDelete(
 			@ApiParam(value = "Identificador da Categoria.", required = true) @PathVariable("idCategoria") Long idCategoria) {
-		return categoriaApiService.deleteCategoria(idCategoria);
+		ResponseEntity<Void> response = categoriaApiService.deleteCategoria(idCategoria);
+		return response;
 	}
 
 	@Override
 	public ResponseEntity<Categoria> categoriasIdCategoriaGet(
 			@ApiParam(value = "Identificador da Categoria.", required = true) @PathVariable("idCategoria") Long idCategoria) {
-		return categoriaApiService.getCategoria(idCategoria);
+		ResponseEntity<Categoria> categoria = categoriaApiService.getCategoria(idCategoria);
+		return categoria;
 	}
 
 	@Override
@@ -56,7 +59,8 @@ public class CategoriasApiController implements CategoriasApi {
 			@ApiParam(value = "Identificador da Categoria.", required = true) @PathVariable("idCategoria") Long idCategoria,
 			@Valid @RequestBody Categoria body) {
 		body.setId(idCategoria);
-		return categoriaApiService.salvar(body);
+		ResponseEntity<Void> response = categoriaApiService.salvar(body);
+		return response;
 	}
 
 }

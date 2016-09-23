@@ -27,8 +27,9 @@ public class ProdutosApiController implements ProdutosApi {
 	@Override
 	public ResponseEntity<Produtos> produtosGet(Long page, Long limit, String nome, String descricao, String todos,
 			Long idCategoria, String order) {
-		// TODO Auto-generated method stub
-		return null;
+		GetProdutosRequest request = new GetProdutosRequest(page, limit, nome, descricao, todos, idCategoria, order);
+		ResponseEntity<Produtos> produtos = produtoApiService.getProdutos(request);
+		return produtos;
 	}
 
 	@Override
