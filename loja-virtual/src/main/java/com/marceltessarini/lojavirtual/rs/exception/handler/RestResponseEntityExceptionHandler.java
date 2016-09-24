@@ -20,6 +20,7 @@ import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAP
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
 import com.marceltessarini.lojavirtual.rs.exception.CategoriaException;
 import com.marceltessarini.lojavirtual.rs.exception.GenericApiException;
+import com.marceltessarini.lojavirtual.rs.exception.ProdutoException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Errors;
@@ -36,7 +37,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	 * @return Mensagem de erro.
 	 */
 	@ExceptionHandler({ QueryStringException.class, ApiSecurityException.class, GenericApiException.class,
-			CategoriaException.class })
+			CategoriaException.class, ProdutoException.class })
 	public final ResponseEntity<Object> handleApiException(Exception ex, WebRequest request) {
 		ResponseEntity<Object> response;
 
@@ -48,6 +49,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 			response = handleApiSecurityException((ApiSecurityException) ex, request);
 		} else if (ex instanceof CategoriaException) {
 			response = handleCategoriaException((CategoriaException) ex, request);
+		} else if (ex instanceof ProdutoException) {
+			response = handleProdutoException((ProdutoException) ex, request);
 		} else {
 			response = handleGenericApiException((GenericApiException) ex, request);
 
@@ -56,6 +59,31 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 		return response;
 	}
 	
+	private ResponseEntity<Object> handleProdutoException(ProdutoException ex, WebRequest request) {
+		// Aqui é esperado http status 400 ou http status 422.
+		
+		// Http status 400
+		int codigoHttp400 = 400;
+		List<Erro> errosHttp400 = ex.filtarErros(codigoHttp400);
+		if (!errosHttp400.isEmpty()) {
+			Errors erroWrapper = new Errors();
+			erroWrapper.setErrors(errosHttp400);
+			return new ResponseEntity<Object>(erroWrapper, HttpStatus.BAD_REQUEST);
+		}
+		
+		// Http status 422
+		int codigoHttp422 = 422;
+		List<Erro> errosHttp422 = ex.filtarErros(codigoHttp422);
+		if (!errosHttp422.isEmpty()) {
+			Errors erroWrapper = new Errors();
+			erroWrapper.setErrors(errosHttp422);
+			return new ResponseEntity<Object>(erroWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
+			
+		}
+		
+		throw new IllegalArgumentException("Tratando ProdutoException: Status não esperado", ex);
+	}
+
 	private ResponseEntity<Object> handleCategoriaException(CategoriaException ex, WebRequest request) {
 		// Aqui é esperado http status 400 ou http status 422.
 		

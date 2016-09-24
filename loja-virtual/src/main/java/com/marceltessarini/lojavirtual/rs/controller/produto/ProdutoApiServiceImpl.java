@@ -15,6 +15,7 @@ import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
 import com.marceltessarini.lojavirtual.rs.exception.GenericApiException;
+import com.marceltessarini.lojavirtual.rs.exception.ProdutoException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Metadata;
@@ -154,16 +155,25 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 	@Override
 	public ResponseEntity<Void> salvar(Produto produto) {
 		
-		validarProduto(produto);
+		try {
+			validarProduto(produto);
 
-		// --------------------------------------------------------------------------
-		// Fake 
-		simulandoProblemasComSeguranca(produto);
-		// ---------------------------------------------------------------------------
+			// --------------------------------------------------------------------------
+			// Fake 
+			simulandoProblemasComSeguranca(produto);
+			// ---------------------------------------------------------------------------
+			
+			// Sucesso
+			// Algo fake
+			return adicionarProduto(produto);
+		} catch (ProdutoException | ApiSecurityException e) {
+			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
+			throw e;
+		} catch (Exception e) {
+			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
+			throw ex;
+		}
 		
-		// Sucesso
-		// Algo fake
-		return adicionarProduto(produto);
 	}
 
 	// Fake!
@@ -191,26 +201,14 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 	}
 
 	private void validarProduto(Produto produto) {
-		Erro erroPrecoMenorOuIgualZero = null;
-		Erro erroPrecoCasasDecimais = null;
+		validarDadosDoProduto(produto);
+		validarRegrasDeNegorio(produto);
+	}
+	
+	private void validarRegrasDeNegorio(Produto produto) {
 		Erro erroNomeJaExiste = null;
 		Erro erroCategoriaNaoExistente = null;
 
-		Double preco = produto.getPreco();
-
-		// Preco deve ser maior do que zero.
-		if (preco <= 0.0) {
-			String[] parametros = null;
-			CodigoStatusAPI chave = CodigoStatusAPI.PRODUTO_002_005;
-			erroPrecoMenorOuIgualZero = CodigoAPIService.criarErro(chave, parametros);
-		}
-		
-		// Preco deve ter ate duas casas decimais.
-		if (!isValorTemAteDuasCasasDecimais(preco)) {
-			String[] parametros = null;
-			CodigoStatusAPI chave = CodigoStatusAPI.PRODUTO_002_006;
-			erroPrecoCasasDecimais = CodigoAPIService.criarErro(chave, parametros);
-		}
 		
 		// ----------------------------------------------------
 		// Fake! Simulando um nome de produto ja existente
@@ -231,7 +229,40 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 		}
 		
 		// -----------------------------------------------------
+
+		List<Erro> itensErro = new ArrayList<>();
+
 		
+		if (erroNomeJaExiste != null) {
+			itensErro.add(erroNomeJaExiste);
+		}
+		
+		if (erroCategoriaNaoExistente != null) {
+			itensErro.add(erroCategoriaNaoExistente);
+		}
+		
+		ProdutoException.lancarSeTiverErros(itensErro);
+	}
+	
+	private void validarDadosDoProduto(Produto produto) {
+		Erro erroPrecoMenorOuIgualZero = null;
+		Erro erroPrecoCasasDecimais = null;
+		
+		Double preco = produto.getPreco();
+
+		// Preco deve ser maior do que zero.
+		if (preco <= 0.0) {
+			String[] parametros = null;
+			CodigoStatusAPI chave = CodigoStatusAPI.PRODUTO_002_005;
+			erroPrecoMenorOuIgualZero = CodigoAPIService.criarErro(chave, parametros);
+		}
+		
+		// Preco deve ter ate duas casas decimais.
+		if (!isValorTemAteDuasCasasDecimais(preco)) {
+			String[] parametros = null;
+			CodigoStatusAPI chave = CodigoStatusAPI.PRODUTO_002_006;
+			erroPrecoCasasDecimais = CodigoAPIService.criarErro(chave, parametros);
+		}
 		
 		List<Erro> itensErro = new ArrayList<>();
 		
@@ -243,14 +274,9 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 			itensErro.add(erroPrecoCasasDecimais);
 		}
 		
-		if (erroNomeJaExiste != null) {
-			itensErro.add(erroNomeJaExiste);
-		}
-		
-		if (erroCategoriaNaoExistente != null) {
-			itensErro.add(erroCategoriaNaoExistente);
-		}
-		QueryStringException.lancarSeTiverErros(itensErro);
+
+		ProdutoException.lancarSeTiverErros(itensErro);
+
 	}
 	
 	private boolean isValorTemAteDuasCasasDecimais(Double valor) {
