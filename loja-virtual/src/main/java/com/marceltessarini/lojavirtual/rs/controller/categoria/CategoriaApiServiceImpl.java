@@ -175,7 +175,7 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 	@Override
 	public ResponseEntity<Void> salvar(Categoria categoria) {
 		try {
-			validarSalvarCategoria(categoria);
+			validarCategoria(categoria);
 			
 			Long id = categoria.getId();
 			if (id == null) {
@@ -209,7 +209,7 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
-	private void validarSalvarCategoria(Categoria categoria) {
+	private void validarCategoria(Categoria categoria) {
 		Long idCategoria = categoria.getIdCategoria();
 		String status = categoria.getStatus();
 		String nome = categoria.getNome();
