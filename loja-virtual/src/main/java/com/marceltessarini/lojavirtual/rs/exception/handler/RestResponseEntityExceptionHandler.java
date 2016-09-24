@@ -170,14 +170,23 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 			Erro erro = CodigoAPIService.criarErro(chave, parametros);
 			errors.add(erro);
 		}
+		
+		if ("idProduto".equals(nomeParametro)) {
+			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_400_301;
+			String[] parametros = {"idProduto", "Numérico"};
+			Erro erro = CodigoAPIService.criarErro(chave, parametros);
+			errors.add(erro);
+		}
 			
 		if (!errors.isEmpty()) {
-			return new ResponseEntity<Object>(erroWrapper, HttpStatus.BAD_REQUEST);
+			ResponseEntity<Object> response = new ResponseEntity<Object>(erroWrapper, HttpStatus.BAD_REQUEST);
+			return response;
 		}
 			
 		
 		// Ops, nome de parametro nao esperado!
-		return null;
+		ResponseEntity<Object> responseHttpStatus500 = responseHttpStatus500();
+		return responseHttpStatus500;
 	}
 
 	@Override
