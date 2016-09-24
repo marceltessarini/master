@@ -2,6 +2,7 @@ package com.marceltessarini.lojavirtual.rs.model;
 
 import java.util.Objects;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
@@ -42,6 +43,8 @@ public class Categoria   {
   private String descricao = null;
 
   @JsonProperty("status")
+  @Pattern(regexp = "ATIVO|INATIVO", message = "CATEGORIA_001_005")
+  @NotNull(message = "CATEGORIA_001_005")
   private String status = null;
 
   public Categoria descricao(String descricao) {

@@ -218,7 +218,7 @@ public class CodigoAPIService {
 		case CATEGORIA_001_005:
 			codigoHttp = 400;
 			codigoDaAPI = "001.005";
-			mensagem = "Campo status deve ser ATIVO, INATIVO ou TODOS.";
+			mensagem = "Campo status deve ser ATIVO ou INATIVO.";
 			tipo = "CategoriaException";
 			break;
 

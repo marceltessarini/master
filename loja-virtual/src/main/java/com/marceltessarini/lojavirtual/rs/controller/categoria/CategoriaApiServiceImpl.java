@@ -86,7 +86,7 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 	
 	private void validarGetCategoriasRequest(String status, String order) throws QueryStringException {
 		Erro erroStatus = null;
-		if (!isStatusValido(status)) {
+		if (!isStatusValidoParaConsulta(status)) {
 			String[] parametros = {"status", "ATIVO, INATIVO ou TODOS"};
 			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_400_301;
 			erroStatus = CodigoAPIService.criarErro(chave, parametros);
@@ -125,7 +125,7 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 	}
 
 	
-	private boolean isStatusValido(String status) {
+	private boolean isStatusValidoParaConsulta(String status) {
 		if (StringUtils.isNotBlank(status)) {
 			String statusTrim = status.trim().toUpperCase();
 			
@@ -211,11 +211,9 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 
 	private void validarCategoria(Categoria categoria) {
 		Long idCategoria = categoria.getIdCategoria();
-		String status = categoria.getStatus();
 		String nome = categoria.getNome();
 
 		Erro erroIdCategoriaInvalido = null;
-		Erro erroStatusInvalido = null;
 		Erro erroNomeCategoriaJaExiste = null;
 
 		// ------------------- FAKE simulando categoria invalida ------------------------------
@@ -236,22 +234,12 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 		}
 		// ------------------------------------------------------------------------------------
 		
-		if (!isStatusValido(status)) {
-			String[] parametros = null;
-			CodigoStatusAPI chaveErro = CodigoStatusAPI.CATEGORIA_001_005;
-			erroStatusInvalido = CodigoAPIService.criarErro(chaveErro, parametros);
-		}
-		
 		List<Erro> itensErro = new ArrayList<>();
 	
 		if (erroIdCategoriaInvalido != null) {
 			itensErro.add(erroIdCategoriaInvalido);
 		}
 
-		if (erroStatusInvalido != null) {
-			itensErro.add(erroStatusInvalido);
-		}
-		
 		if (erroNomeCategoriaJaExiste != null) {
 			itensErro.add(erroNomeCategoriaJaExiste);
 		}
