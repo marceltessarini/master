@@ -388,9 +388,28 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 
 	@Override
 	public ResponseEntity<Void> salvarRanking(Ranking ranking) {
+		validarRanking(ranking);
+		
 		// Fake!
 		ResponseEntity<Void> response = adicionarRanking();
 		return response;
+	}
+
+	private void validarRanking(Ranking ranking) {
+		// Fake! 
+		// Simulando produto nao existe
+		Long idProduto = ranking.getIdProduto();
+		if (idProduto == 455) {
+			
+
+			String[] parametros = null;
+			CodigoStatusAPI chave = CodigoStatusAPI.RANKING_002_012;
+			Erro erroIdProdutoNaoExiste = CodigoAPIService.criarErro(chave, parametros);
+
+			
+			ProdutoException.lancarSeTiverErro(erroIdProdutoNaoExiste);
+		}
+		
 	}
 
 	private ResponseEntity<Void> adicionarRanking() {

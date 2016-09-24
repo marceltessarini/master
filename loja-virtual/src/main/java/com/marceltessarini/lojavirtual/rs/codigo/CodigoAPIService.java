@@ -39,7 +39,8 @@ public class CodigoAPIService {
 		PRODUTO_002_008,
 		PRODUTO_002_009,
 		RANKING_002_010,
-		RANKING_002_011;
+		RANKING_002_011,
+		RANKING_002_012;
 		
 		public static CodigoStatusAPI getCodigoStatusAPI(String codigo) {
 			CodigoStatusAPI[] values = CodigoStatusAPI.values();
@@ -310,6 +311,13 @@ public class CodigoAPIService {
 			tipo = "ProdutoException";
 			break;
 
+		case RANKING_002_012:
+			codigoHttp = 422;
+			codigoDaAPI = "002.012";
+			mensagem = "O campo idProduto informado não existe.";
+			tipo = "ProdutoException";
+			break;
+			
 		default:
 			throw new IllegalArgumentException("Código da API não esperadao: " + chave);
 		}
