@@ -42,7 +42,7 @@ public class ProdutosApiController implements ProdutosApi {
 	@Override
 	public ResponseEntity<Produto> produtosIdProdutoGet(
 			@ApiParam(value = "Identificador do Produto.", required = true) @PathVariable("idProduto") Long idProduto) {
-		ResponseEntity<Produto> response = produtoApiService.getProdutos(idProduto);
+		ResponseEntity<Produto> response = produtoApiService.getProduto(idProduto);
 		return response;
 	}
 
@@ -73,8 +73,10 @@ public class ProdutosApiController implements ProdutosApi {
 	public ResponseEntity<Void> produtosIdProdutoRankingPost(
 			@ApiParam(value = "Identificador do Produto.", required = true) @PathVariable("idProduto") Long idProduto,
 			@Valid @RequestBody Ranking body) {
-		// TODO Auto-generated method stub
-		return null;
+		body.setId(null);
+		body.setIdProduto(idProduto);
+		ResponseEntity<Void> response = produtoApiService.salvarRanking(body);
+		return response;
 	}
 
 	@Override

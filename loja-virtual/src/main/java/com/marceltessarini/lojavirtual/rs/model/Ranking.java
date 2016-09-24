@@ -1,8 +1,13 @@
 package com.marceltessarini.lojavirtual.rs.model;
 
 import java.util.Objects;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -27,6 +32,9 @@ public class Ranking   {
   private Long idProduto = null;
 
   @JsonProperty("nota")
+  @NotNull(message = "RANKING_002_011")
+  @Min(value = 0, message = "RANKING_002_010")
+  @Max(value = 10, message = "RANKING_002_010")
   private Integer nota = null;
 
   @JsonProperty("comentario")

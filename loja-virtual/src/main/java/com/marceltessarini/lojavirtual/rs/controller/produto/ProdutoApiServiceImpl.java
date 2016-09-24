@@ -328,7 +328,7 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 	}
 
 	@Override
-	public ResponseEntity<Produto> getProdutos(Long idProduto) {
+	public ResponseEntity<Produto> getProduto(Long idProduto) {
 		// -----------------------------------------------------------
 		// Fake
 		simmulandoProblemasComSeguranca(idProduto);
@@ -384,6 +384,20 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 		r1.setNota(nota);
 		r1.setComentario(comentario);
 		return r1;
+	}
+
+	@Override
+	public ResponseEntity<Void> salvarRanking(Ranking ranking) {
+		// Fake!
+		ResponseEntity<Void> response = adicionarRanking();
+		return response;
+	}
+
+	private ResponseEntity<Void> adicionarRanking() {
+		String location = "/api/loja/v1/produtos/456/ranking/12";
+		MultiValueMap<String, String> headers = new HttpHeaders();
+		headers.add("Location", location);
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 
