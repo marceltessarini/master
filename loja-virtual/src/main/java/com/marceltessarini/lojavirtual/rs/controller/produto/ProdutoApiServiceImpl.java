@@ -5,15 +5,18 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
 import com.marceltessarini.lojavirtual.rs.exception.GenericApiException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
+import com.marceltessarini.lojavirtual.rs.model.Categoria;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Metadata;
 import com.marceltessarini.lojavirtual.rs.model.Produto;
@@ -148,5 +151,24 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 		// Blank eh valido!
 		return true;
 	}
+
+	@Override
+	public ResponseEntity<Void> salvar(Produto produto) {
+		// TODO Auto-generated method stub
+		
+		// Sucesso
+		// Algo fake
+		return adicionarProduto(produto);
+	}
+	
+	private ResponseEntity<Void> adicionarProduto(Produto produto) {
+		// Fake!
+		String location = "/api/loja/v1/produtos/456";
+		
+		MultiValueMap<String, String> headers = new HttpHeaders();
+		headers.add("Location", location);
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+
 
 }

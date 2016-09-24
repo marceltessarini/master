@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModel;
@@ -26,6 +29,8 @@ public class Produto   {
   private Long id = null;
 
   @JsonProperty("nome")
+  @NotBlank(message = "PRODUTO_002_001")
+  @Length(max = 500, message = "PRODUTO_002_002")
   private String nome = null;
 
   @JsonProperty("descricao")

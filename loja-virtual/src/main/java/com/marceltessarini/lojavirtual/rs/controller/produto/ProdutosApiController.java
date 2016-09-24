@@ -79,8 +79,9 @@ public class ProdutosApiController implements ProdutosApi {
 
 	@Override
 	public ResponseEntity<Void> produtosPost(@Valid @RequestBody Produto body) {
-		// TODO Auto-generated method stub
-		return null;
+		body.setId(null);
+		ResponseEntity<Void> response = produtoApiService.salvar(body);
+		return response;
 	}
 
 }
