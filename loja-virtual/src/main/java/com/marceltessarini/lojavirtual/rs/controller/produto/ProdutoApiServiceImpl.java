@@ -156,9 +156,56 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 	public ResponseEntity<Void> salvar(Produto produto) {
 		// TODO Auto-generated method stub
 		
+		
+		validarProduto(produto);
+
+		
 		// Sucesso
 		// Algo fake
 		return adicionarProduto(produto);
+	}
+
+	private void validarProduto(Produto produto) {
+		Erro erroPrecoMenorOuIgualZero = null;
+		Erro erroPrecoCasasDecimais = null;
+		
+		// Preco deve ser maior do que zero.
+		Double preco = produto.getPreco();
+		if (preco <= 0.0) {
+			String[] parametros = null;
+			CodigoStatusAPI chave = CodigoStatusAPI.PRODUTO_002_005;
+			erroPrecoMenorOuIgualZero = CodigoAPIService.criarErro(chave, parametros);
+		}
+		
+		// Preco deve ter ate duas casas decimais.
+		if (!isValorTemAteDuasCasasDecimais(preco)) {
+			String[] parametros = null;
+			CodigoStatusAPI chave = CodigoStatusAPI.PRODUTO_002_006;
+			erroPrecoCasasDecimais = CodigoAPIService.criarErro(chave, parametros);
+		}
+		
+		List<Erro> itensErro = new ArrayList<>();
+		
+		if (erroPrecoMenorOuIgualZero != null) {
+			itensErro.add(erroPrecoMenorOuIgualZero);
+		}
+		
+		if (erroPrecoCasasDecimais != null) {
+			itensErro.add(erroPrecoCasasDecimais);
+		}
+		QueryStringException.lancarSeTiverErros(itensErro);
+	}
+	
+	private boolean isValorTemAteDuasCasasDecimais(Double valor) {
+		if (valor != null) {
+			String[] split = valor.toString().split("\\.");
+			String casasDecimais = split[1];
+			int numeroCasasDecimais = casasDecimais.length();
+			return numeroCasasDecimais <= 2;
+		}
+		
+		// Zero casas decimais!
+		return true;
 	}
 	
 	private ResponseEntity<Void> adicionarProduto(Produto produto) {

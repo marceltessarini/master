@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -34,9 +36,11 @@ public class Produto   {
   private String nome = null;
 
   @JsonProperty("descricao")
+  @NotBlank(message = "PRODUTO_002_003")
   private String descricao = null;
 
   @JsonProperty("preco")
+  @NotNull(message = "PRODUTO_002_004")
   private Double preco = null;
 
   @JsonProperty("categorias")
