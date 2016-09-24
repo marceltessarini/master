@@ -12,6 +12,8 @@ public interface ProdutoApiService {
 	ResponseEntity<Void> salvar(Produto produto);
 
 	ResponseEntity<Void> deleteProduto(Long idProduto);
+
+	ResponseEntity<Produto> getProdutos(Long idProduto);
 	
 
 }

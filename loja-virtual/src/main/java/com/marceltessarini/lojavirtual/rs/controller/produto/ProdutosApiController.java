@@ -42,8 +42,8 @@ public class ProdutosApiController implements ProdutosApi {
 	@Override
 	public ResponseEntity<Produto> produtosIdProdutoGet(
 			@ApiParam(value = "Identificador do Produto.", required = true) @PathVariable("idProduto") Long idProduto) {
-		// TODO Auto-generated method stub
-		return null;
+		ResponseEntity<Produto> response = produtoApiService.getProdutos(idProduto);
+		return response;
 	}
 
 	@Override

@@ -311,5 +311,17 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 		ApiSecurityException.lancarSeTiverErros(itensErro);
 	}
 
+	@Override
+	public ResponseEntity<Produto> getProdutos(Long idProduto) {
+		// -----------------------------------------------------------
+		// Fake
+		simmulandoProblemasComSeguranca(idProduto);
+		Produto produto1 = criarProdutos(1L, "Apreda a programar com C++", 99.99, Arrays.asList(1L, 2L), "Descrição: Apreda a programar com C++");
+		ResponseEntity<Produto> response = new ResponseEntity<Produto>(produto1, HttpStatus.OK);
+		return response;
+		// -----------------------------------------------------------
+		
+	}
+
 
 }
