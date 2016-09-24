@@ -168,9 +168,12 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 	private void validarProduto(Produto produto) {
 		Erro erroPrecoMenorOuIgualZero = null;
 		Erro erroPrecoCasasDecimais = null;
-		
-		// Preco deve ser maior do que zero.
+		Erro erroNomeJaExiste = null;
+		Erro erroCategoriaNaoExistente = null;
+
 		Double preco = produto.getPreco();
+
+		// Preco deve ser maior do que zero.
 		if (preco <= 0.0) {
 			String[] parametros = null;
 			CodigoStatusAPI chave = CodigoStatusAPI.PRODUTO_002_005;
@@ -184,6 +187,27 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 			erroPrecoCasasDecimais = CodigoAPIService.criarErro(chave, parametros);
 		}
 		
+		// ----------------------------------------------------
+		// Fake! Simulando um nome de produto ja existente
+		String nome = produto.getNome();
+		if ("nome".equals(nome)) {
+			String[] parametros = null;
+			CodigoStatusAPI chave = CodigoStatusAPI.PRODUTO_002_008;
+			erroNomeJaExiste = CodigoAPIService.criarErro(chave, parametros);
+		}
+		
+		// Simulando uma categoria nao existente
+		Long idCategoriaNaoExistente = 100L;
+		List<Long> categorias = produto.getCategorias();
+		if (categorias.contains(idCategoriaNaoExistente)) {
+			String[] parametros = {"[100]"};
+			CodigoStatusAPI chave = CodigoStatusAPI.PRODUTO_002_009;
+			erroCategoriaNaoExistente = CodigoAPIService.criarErro(chave, parametros);
+		}
+		
+		// -----------------------------------------------------
+		
+		
 		List<Erro> itensErro = new ArrayList<>();
 		
 		if (erroPrecoMenorOuIgualZero != null) {
@@ -192,6 +216,14 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 		
 		if (erroPrecoCasasDecimais != null) {
 			itensErro.add(erroPrecoCasasDecimais);
+		}
+		
+		if (erroNomeJaExiste != null) {
+			itensErro.add(erroNomeJaExiste);
+		}
+		
+		if (erroCategoriaNaoExistente != null) {
+			itensErro.add(erroCategoriaNaoExistente);
 		}
 		QueryStringException.lancarSeTiverErros(itensErro);
 	}

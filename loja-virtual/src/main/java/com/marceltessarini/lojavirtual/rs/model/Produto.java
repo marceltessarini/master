@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -44,6 +45,8 @@ public class Produto   {
   private Double preco = null;
 
   @JsonProperty("categorias")
+  @NotNull(message = "PRODUTO_002_007")
+  @Size(min = 1, message = "PRODUTO_002_007")
   private List<Long> categorias = new ArrayList<Long>();
 
   public Produto categorias(List<Long> categorias) {

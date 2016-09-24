@@ -289,7 +289,8 @@ public class CodigoAPIService {
 		case PRODUTO_002_009:
 			codigoHttp = 422;
 			codigoDaAPI = "002.009";
-			mensagem = "A categoria ID_CATEGORIA informada não existe.";
+			String categoriasNaoExistentes = parametros[0];
+			mensagem = String.format("A(s) categoria(s) '%s' informada(s) não existe(m).", categoriasNaoExistentes);
 			tipo = "ProdutoException";
 			break;
 			
