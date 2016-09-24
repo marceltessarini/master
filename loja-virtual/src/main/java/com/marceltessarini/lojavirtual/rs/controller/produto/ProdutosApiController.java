@@ -50,8 +50,9 @@ public class ProdutosApiController implements ProdutosApi {
 	public ResponseEntity<Void> produtosIdProdutoPut(
 			@ApiParam(value = "Identificador do Produto.", required = true) @PathVariable("idProduto") Long idProduto,
 			@Valid @RequestBody Produto body) {
-		// TODO Auto-generated method stub
-		return null;
+		body.setId(idProduto);
+		ResponseEntity<Void> response = produtoApiService.salvar(body);
+		return response;
 	}
 
 	@Override

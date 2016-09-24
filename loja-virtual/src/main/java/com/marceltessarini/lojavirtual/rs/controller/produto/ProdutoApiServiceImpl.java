@@ -151,10 +151,24 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 		// Fake 
 		simulandoProblemasComSeguranca(produto);
 		// ---------------------------------------------------------------------------
+
+		Long idProduto = produto.getId();
 		
-		// Sucesso
-		// Algo fake
-		return adicionarProduto(produto);
+		if (idProduto == null) {
+			// Novo produto
+
+			// Algo fake
+			return adicionarProduto(produto);
+		} else {
+			// atualizando produto
+
+			// Algo fake
+			return atualizarProduto(produto);
+		}
+	}
+
+	private ResponseEntity<Void> atualizarProduto(Produto produto) {
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	// Fake!
