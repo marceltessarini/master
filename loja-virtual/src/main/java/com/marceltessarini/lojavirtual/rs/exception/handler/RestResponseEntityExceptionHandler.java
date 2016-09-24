@@ -162,8 +162,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 		}
 		
 		if ("idCategoria".equals(nomeParametro)) {
-			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_400_302;
-			String[] parametros = {"idCategoria"};
+			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_400_301;
+			String[] parametros = {"idCategoria", "Numérico"};
 			Erro erro = CodigoAPIService.criarErro(chave, parametros);
 			errors.add(erro);
 		}

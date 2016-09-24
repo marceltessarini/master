@@ -87,15 +87,15 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 	private void validarGetCategoriasRequest(String status, String order) throws QueryStringException {
 		Erro erroStatus = null;
 		if (!isStatusValido(status)) {
-			String[] parametros = {"status"};
-			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_400_302;
+			String[] parametros = {"status", "ATIVO, INATIVO ou TODOS"};
+			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_400_301;
 			erroStatus = CodigoAPIService.criarErro(chave, parametros);
 		}
 		
 		Erro erroOrder = null;
 		if (!isOrderValida(order)) {
-			String[] parametros = {"order"};
-			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_400_302;
+			String[] parametros = {"order", "nomeCategoria"};
+			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_400_301;
 			erroOrder = CodigoAPIService.criarErro(chave, parametros);
 		}
 		

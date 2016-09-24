@@ -144,7 +144,7 @@ public class CodigoAPIService {
 			codigoDaAPI = "400.301";
 			String nomeAtributo3 = parametros[0];
 			String pattern = parametros[1];
-			mensagem = String.format("Parâmetro de queryString com formato incorreto. Para o atributo '%s' o formato correto é '%s'.", nomeAtributo3, pattern);
+			mensagem = String.format("Parâmetro com formato incorreto. Para o parâmetro '%s' o formato correto é '%s'.", nomeAtributo3, pattern);
 			tipo = "QueryStringException";
 			break;
 
@@ -152,7 +152,7 @@ public class CodigoAPIService {
 			codigoHttp = 400;
 			codigoDaAPI = "400.302";
 			String nomeAtributo4 = parametros[0];
-			mensagem = String.format("Atributo não informado ou inválido : '%s'.", nomeAtributo4);
+			mensagem = String.format("Parâmetro não informado ou inválido : '%s'.", nomeAtributo4);
 			tipo = "QueryStringException";
 			break;
 
