@@ -390,6 +390,12 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 	public ResponseEntity<Void> salvarRanking(Ranking ranking) {
 		validarRanking(ranking);
 		
+		// ---------------------------------------------------
+		// Simulando problemas com seguranca
+		Long idProduto = ranking.getIdProduto();
+		simmulandoProblemasComSeguranca(idProduto);
+		// ---------------------------------------------------
+		
 		// Fake!
 		ResponseEntity<Void> response = adicionarRanking();
 		return response;
