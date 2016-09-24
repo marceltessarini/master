@@ -1,14 +1,13 @@
 package com.marceltessarini.lojavirtual.rs.model;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.marceltessarini.lojavirtual.rs.model.Metadata;
-import com.marceltessarini.lojavirtual.rs.model.Produto;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 
 
@@ -23,11 +22,12 @@ import java.util.List;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-09-19T11:35:00.727-03:00")
 
 public class Produtos   {
-  @JsonProperty("metadata")
-  private List<Metadata> metadata = new ArrayList<Metadata>();
 
   @JsonProperty("produtos")
   private List<Produto> produtos = new ArrayList<Produto>();
+
+  @JsonProperty("metadata")
+  private List<Metadata> metadata = new ArrayList<Metadata>();
 
   public Produtos metadata(List<Metadata> metadata) {
     this.metadata = metadata;

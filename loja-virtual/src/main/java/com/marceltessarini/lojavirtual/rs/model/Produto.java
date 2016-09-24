@@ -1,12 +1,13 @@
 package com.marceltessarini.lojavirtual.rs.model;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 
 
@@ -21,20 +22,20 @@ import java.util.List;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-09-19T11:35:00.727-03:00")
 
 public class Produto   {
-  @JsonProperty("categorias")
-  private List<Long> categorias = new ArrayList<Long>();
-
-  @JsonProperty("descricao")
-  private String descricao = null;
-
   @JsonProperty("id")
   private Long id = null;
 
   @JsonProperty("nome")
   private String nome = null;
 
+  @JsonProperty("descricao")
+  private String descricao = null;
+
   @JsonProperty("preco")
   private Double preco = null;
+
+  @JsonProperty("categorias")
+  private List<Long> categorias = new ArrayList<Long>();
 
   public Produto categorias(List<Long> categorias) {
     this.categorias = categorias;

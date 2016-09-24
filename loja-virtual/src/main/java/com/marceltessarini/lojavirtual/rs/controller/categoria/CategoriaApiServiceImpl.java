@@ -30,7 +30,6 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 	public ResponseEntity<Categorias> getCategorias(GetCategoriasRequest request) {
 		try {
 			validarGetCategoriasRequest(request);
-			Categorias categorias = criarCategoriasWrapper();
 			
 			// -----------------------------
 			// Simulando algum problema
@@ -40,6 +39,7 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 			
 			// Ok, deu tudo certo!
 			// Enviando alguma  coisa! Dados  fake
+			Categorias categorias = criarCategoriasWrapper();
 			ResponseEntity<Categorias> response = new ResponseEntity<Categorias>(categorias, HttpStatus.OK);
 			return response;
 			
@@ -94,7 +94,7 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 		
 		Erro erroOrder = null;
 		if (!isOrderValida(order)) {
-			String[] parametros = {"order", "nomeCategoria"};
+			String[] parametros = {"order", "nomeCategoria ou -nomeCategoria"};
 			CodigoStatusAPI chave = CodigoStatusAPI.HTTP_400_301;
 			erroOrder = CodigoAPIService.criarErro(chave, parametros);
 		}
