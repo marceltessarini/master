@@ -16,7 +16,6 @@ import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAP
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
 import com.marceltessarini.lojavirtual.rs.exception.GenericApiException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
-import com.marceltessarini.lojavirtual.rs.model.Categoria;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Metadata;
 import com.marceltessarini.lojavirtual.rs.model.Produto;
@@ -154,15 +153,41 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 
 	@Override
 	public ResponseEntity<Void> salvar(Produto produto) {
-		// TODO Auto-generated method stub
-		
 		
 		validarProduto(produto);
 
+		// --------------------------------------------------------------------------
+		// Fake 
+		simulandoProblemasComSeguranca(produto);
+		// ---------------------------------------------------------------------------
 		
 		// Sucesso
 		// Algo fake
 		return adicionarProduto(produto);
+	}
+
+	// Fake!
+	private void simulandoProblemasComSeguranca(Produto produto) {
+		List<Erro> itensErro = new ArrayList<>();
+
+		String nome = produto.getNome();
+		if ("403".equals(nome)) {
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.HTTP_403_201;
+			Erro erro403 = CodigoAPIService.criarErro(chaveErro, parametros);
+			itensErro.add(erro403);
+		}
+		
+		if ("401".equals(nome)) {
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.HTTP_401_201;
+			Erro erro401 = CodigoAPIService.criarErro(chaveErro, parametros);
+			itensErro.add(erro401);
+		}
+		
+		
+		ApiSecurityException.lancarSeTiverErros(itensErro);
+
 	}
 
 	private void validarProduto(Produto produto) {
