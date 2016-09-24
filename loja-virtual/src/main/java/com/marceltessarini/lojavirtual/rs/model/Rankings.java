@@ -23,11 +23,12 @@ import java.util.List;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-09-19T11:35:00.727-03:00")
 
 public class Rankings   {
-  @JsonProperty("metadata")
-  private List<Metadata> metadata = new ArrayList<Metadata>();
-
+	
   @JsonProperty("rankings")
   private List<Ranking> rankings = new ArrayList<Ranking>();
+
+  @JsonProperty("metadata")
+  private List<Metadata> metadata = new ArrayList<Metadata>();
 
   public Rankings metadata(List<Metadata> metadata) {
     this.metadata = metadata;

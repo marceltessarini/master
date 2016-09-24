@@ -59,8 +59,7 @@ public class ProdutosApiController implements ProdutosApi {
 	public ResponseEntity<Rankings> produtosIdProdutoRankingGet(
 			@ApiParam(value = "Identificador do Produto.", required = true) @PathVariable("idProduto") Long idProduto,
 			Long page, Long limit, Integer order) {
-		// TODO Auto-generated method stub
-		return null;
+		return produtoApiService.getRankingsDoProduto(idProduto);
 	}
 
 	@Override

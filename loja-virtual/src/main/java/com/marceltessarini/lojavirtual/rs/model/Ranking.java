@@ -19,8 +19,6 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-09-19T11:35:00.727-03:00")
 
 public class Ranking   {
-  @JsonProperty("comentario")
-  private String comentario = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -30,6 +28,9 @@ public class Ranking   {
 
   @JsonProperty("nota")
   private Integer nota = null;
+
+  @JsonProperty("comentario")
+  private String comentario = null;
 
   public Ranking comentario(String comentario) {
     this.comentario = comentario;
