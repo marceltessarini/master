@@ -18,6 +18,7 @@ import com.marceltessarini.lojavirtual.rs.exception.ProdutoException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Metadata;
+import com.marceltessarini.lojavirtual.rs.model.Nota;
 import com.marceltessarini.lojavirtual.rs.model.Produto;
 import com.marceltessarini.lojavirtual.rs.model.Produtos;
 import com.marceltessarini.lojavirtual.rs.model.Ranking;
@@ -423,6 +424,24 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 		MultiValueMap<String, String> headers = new HttpHeaders();
 		headers.add("Location", location);
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+
+	@Override
+	public ResponseEntity<Nota> getNotasDoRankingDoProduto(Long idProduto) {
+		
+		// --------------------------------------------------------------------------
+		// Simulando problemas com seguranca
+		simmulandoProblemasComSeguranca(idProduto);
+		// --------------------------------------------------------------------------
+		
+		// Fake!
+		Nota nota = new Nota();
+		nota.setMaiorNota(9L);
+		nota.setMedia(6L);
+		nota.setMenorNota(3L);
+		
+		ResponseEntity<Nota> response = new ResponseEntity<Nota>(nota, HttpStatus.OK);
+		return response;
 	}
 
 

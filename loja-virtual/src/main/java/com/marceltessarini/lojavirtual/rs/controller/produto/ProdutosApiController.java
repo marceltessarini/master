@@ -65,8 +65,8 @@ public class ProdutosApiController implements ProdutosApi {
 	@Override
 	public ResponseEntity<Nota> produtosIdProdutoRankingNotasGet(
 			@ApiParam(value = "Identificador do produto.", required = true) @PathVariable("idProduto") Long idProduto) {
-		// TODO Auto-generated method stub
-		return null;
+		ResponseEntity<Nota> response = produtoApiService.getNotasDoRankingDoProduto(idProduto);
+		return response;
 	}
 
 	@Override
