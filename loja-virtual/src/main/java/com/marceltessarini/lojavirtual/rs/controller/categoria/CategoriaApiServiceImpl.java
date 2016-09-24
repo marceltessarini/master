@@ -15,7 +15,6 @@ import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
 import com.marceltessarini.lojavirtual.rs.exception.CategoriaException;
-import com.marceltessarini.lojavirtual.rs.exception.GenericApiException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
 import com.marceltessarini.lojavirtual.rs.model.Categoria;
 import com.marceltessarini.lojavirtual.rs.model.Categorias;
@@ -28,28 +27,19 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 
 	@Override
 	public ResponseEntity<Categorias> getCategorias(GetCategoriasRequest request) {
-		try {
-			validarGetCategoriasRequest(request);
-			
-			// -----------------------------
-			// Simulando algum problema
-			String produto = request.getProduto();
-			simularProblemasComSeguranca(produto);
-			// -----------------------------
-			
-			// Ok, deu tudo certo!
-			// Enviando alguma  coisa! Dados  fake
-			Categorias categorias = criarCategoriasWrapper();
-			ResponseEntity<Categorias> response = new ResponseEntity<Categorias>(categorias, HttpStatus.OK);
-			return response;
-			
-		} catch (ApiSecurityException | QueryStringException e) {
-			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
-			throw e;
-		} catch (Exception e) {
-			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
-			throw ex;
-		}
+		validarGetCategoriasRequest(request);
+		
+		// -----------------------------
+		// Simulando algum problema
+		String produto = request.getProduto();
+		simularProblemasComSeguranca(produto);
+		// -----------------------------
+		
+		// Ok, deu tudo certo!
+		// Enviando alguma  coisa! Dados  fake
+		Categorias categorias = criarCategoriasWrapper();
+		ResponseEntity<Categorias> response = new ResponseEntity<Categorias>(categorias, HttpStatus.OK);
+		return response;
 	}
 
 	private void simularProblemasComSeguranca(String produto) {
@@ -174,25 +164,17 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 
 	@Override
 	public ResponseEntity<Void> salvar(Categoria categoria) {
-		try {
-			validarCategoria(categoria);
-			
-			Long id = categoria.getId();
-			if (id == null) {
-				// Adicionar
-				ResponseEntity<Void> responseAdicionar = adicionarCategoria(categoria);
-				return responseAdicionar;
-			} else {
-				// Atualizar
-				ResponseEntity<Void> responseAtualizar = atualizarCategoria(categoria);
-				return responseAtualizar;
-			}
-		} catch (CategoriaException e) {
-			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
-			throw e;
-		} catch (Exception e) {
-			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
-			throw ex;
+		validarCategoria(categoria);
+		
+		Long id = categoria.getId();
+		if (id == null) {
+			// Adicionar
+			ResponseEntity<Void> responseAdicionar = adicionarCategoria(categoria);
+			return responseAdicionar;
+		} else {
+			// Atualizar
+			ResponseEntity<Void> responseAtualizar = atualizarCategoria(categoria);
+			return responseAtualizar;
 		}
 	}
 
@@ -251,21 +233,13 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 
 	@Override
 	public ResponseEntity<Categoria> getCategoria(Long idCategoria) {
-		try {
-			// ----------------------------------------
-			simularProblemasComCategoria(idCategoria);
-			// Fake
-			Categoria c2 = criarCategoria(2L, 1L, "Livros de TI", "ATIVO", "Categoria Livros de TI");
-			// -----------------------------------------
-			
-			return new ResponseEntity<Categoria>(c2, HttpStatus.OK);
-		} catch (ApiSecurityException e) {
-			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
-			throw e;
-		} catch (Exception e) {
-			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
-			throw ex;
-		}
+		// ----------------------------------------
+		simularProblemasComCategoria(idCategoria);
+		// Fake
+		Categoria c2 = criarCategoria(2L, 1L, "Livros de TI", "ATIVO", "Categoria Livros de TI");
+		// -----------------------------------------
+		
+		return new ResponseEntity<Categoria>(c2, HttpStatus.OK);
 	}
 	
 	private void simularProblemasComCategoria(Long numeroCategoria) throws ApiSecurityException {
@@ -291,19 +265,11 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 
 	@Override
 	public ResponseEntity<Void> deleteCategoria(Long idCategoria) {
-		try {
-			// --------------------------------------------
-			// Fake
-			simularProblemasComCategoria(idCategoria);
-			// ----------------------------------------------
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		} catch (ApiSecurityException e) {
-			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
-			throw e;
-		} catch (Exception e) {
-			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
-			throw ex;
-		}
+		// --------------------------------------------
+		// Fake
+		simularProblemasComCategoria(idCategoria);
+		// ----------------------------------------------
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
 }

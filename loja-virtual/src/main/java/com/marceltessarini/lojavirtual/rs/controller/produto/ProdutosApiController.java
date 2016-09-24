@@ -35,8 +35,8 @@ public class ProdutosApiController implements ProdutosApi {
 	@Override
 	public ResponseEntity<Void> produtosIdProdutoDelete(
 			@ApiParam(value = "Identificador do Produto.", required = true) @PathVariable("idProduto") Long idProduto) {
-		// TODO Auto-generated method stub
-		return null;
+		ResponseEntity<Void> response = produtoApiService.deleteProduto(idProduto);
+		return response;
 	}
 
 	@Override

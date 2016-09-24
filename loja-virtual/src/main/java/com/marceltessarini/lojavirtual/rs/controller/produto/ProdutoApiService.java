@@ -10,6 +10,8 @@ public interface ProdutoApiService {
 	ResponseEntity<Produtos> getProdutos(GetProdutosRequest request);
 
 	ResponseEntity<Void> salvar(Produto produto);
+
+	ResponseEntity<Void> deleteProduto(Long idProduto);
 	
 
 }

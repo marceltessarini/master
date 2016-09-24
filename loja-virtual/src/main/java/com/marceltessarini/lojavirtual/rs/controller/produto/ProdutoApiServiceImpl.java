@@ -14,7 +14,6 @@ import org.springframework.util.MultiValueMap;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
-import com.marceltessarini.lojavirtual.rs.exception.GenericApiException;
 import com.marceltessarini.lojavirtual.rs.exception.ProdutoException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
@@ -28,26 +27,18 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 
 	@Override
 	public ResponseEntity<Produtos> getProdutos(GetProdutosRequest request) {
-		try {
-			validarGetProdutosRequest(request);
-			
-			// --------------------------------------------------
-			// Simulando problemas com seguranca
-			Long idCategoria = request.getIdCategoria();
-			simularProblemasComSeguranca(idCategoria);
-			// --------------------------------------------------
-			
-			// Sucesso! retornando alguma coisa Fake!
-			Produtos produtoWrapper = criarProdutoWrapper();
-			ResponseEntity<Produtos> response = new ResponseEntity<Produtos>(produtoWrapper, HttpStatus.OK);
-			return response;
-		} catch (ApiSecurityException | QueryStringException e) {
-			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
-			throw e;
-		} catch (Exception e) {
-			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
-			throw ex;
-		}
+		validarGetProdutosRequest(request);
+		
+		// --------------------------------------------------
+		// Simulando problemas com seguranca
+		Long idCategoria = request.getIdCategoria();
+		simularProblemasComSeguranca(idCategoria);
+		// --------------------------------------------------
+		
+		// Sucesso! retornando alguma coisa Fake!
+		Produtos produtoWrapper = criarProdutoWrapper();
+		ResponseEntity<Produtos> response = new ResponseEntity<Produtos>(produtoWrapper, HttpStatus.OK);
+		return response;
 	}
 	
 	// Fake
@@ -154,26 +145,16 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 
 	@Override
 	public ResponseEntity<Void> salvar(Produto produto) {
-		
-		try {
-			validarProduto(produto);
+		validarProduto(produto);
 
-			// --------------------------------------------------------------------------
-			// Fake 
-			simulandoProblemasComSeguranca(produto);
-			// ---------------------------------------------------------------------------
-			
-			// Sucesso
-			// Algo fake
-			return adicionarProduto(produto);
-		} catch (ProdutoException | ApiSecurityException e) {
-			// Apenas relançando para ser a exceção ser tratada em RestResponseEntityExceptionHandler
-			throw e;
-		} catch (Exception e) {
-			GenericApiException ex = GenericApiException.criarGenericApiExceptionComHttpStatus500();
-			throw ex;
-		}
+		// --------------------------------------------------------------------------
+		// Fake 
+		simulandoProblemasComSeguranca(produto);
+		// ---------------------------------------------------------------------------
 		
+		// Sucesso
+		// Algo fake
+		return adicionarProduto(produto);
 	}
 
 	// Fake!
@@ -298,6 +279,36 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 		MultiValueMap<String, String> headers = new HttpHeaders();
 		headers.add("Location", location);
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+
+	@Override
+	public ResponseEntity<Void> deleteProduto(Long idProduto) {
+		// -----------------------------------------------------------
+		// Fake
+		simmulandoProblemasComSeguranca(idProduto);
+		// -----------------------------------------------------------
+		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+	}
+
+	private void simmulandoProblemasComSeguranca(Long idProduto) {
+		List<Erro> itensErro = new ArrayList<>();
+
+		if (idProduto == 403) {
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.HTTP_403_201;
+			Erro erro403 = CodigoAPIService.criarErro(chaveErro, parametros);
+			itensErro.add(erro403);
+		}
+		
+		if (idProduto == 401) {
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.HTTP_401_201;
+			Erro erro401 = CodigoAPIService.criarErro(chaveErro, parametros);
+			itensErro.add(erro401);
+		}
+		
+		
+		ApiSecurityException.lancarSeTiverErros(itensErro);
 	}
 
 

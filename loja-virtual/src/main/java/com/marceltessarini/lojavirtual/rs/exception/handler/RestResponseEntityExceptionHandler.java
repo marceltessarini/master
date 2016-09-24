@@ -17,11 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
-import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
-import com.marceltessarini.lojavirtual.rs.exception.CategoriaException;
-import com.marceltessarini.lojavirtual.rs.exception.GenericApiException;
-import com.marceltessarini.lojavirtual.rs.exception.ProdutoException;
-import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
+import com.marceltessarini.lojavirtual.rs.exception.AbstractAPIRuntimeException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Errors;
 
@@ -29,6 +25,19 @@ import com.marceltessarini.lojavirtual.rs.model.Errors;
 
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+
+	/**
+	 * Trata uma exceção lançada na API e não esperada.
+	 * @param ex exceção.
+	 * @param request
+	 * @return response com http status 500.
+	 */
+	@ExceptionHandler({ Throwable.class} )
+	public final ResponseEntity<Object> handleApiException(Throwable ex, WebRequest request) {
+		ResponseEntity<Object> erroInterno = responseHttpStatus500();
+		return erroInterno;
+	}
+
 	
 	/**
 	 * Trata as exceção lançadas pela API.
@@ -36,112 +45,78 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	 * @param request
 	 * @return Mensagem de erro.
 	 */
-	@ExceptionHandler({ QueryStringException.class, ApiSecurityException.class, GenericApiException.class,
-			CategoriaException.class, ProdutoException.class })
-	public final ResponseEntity<Object> handleApiException(Exception ex, WebRequest request) {
-		ResponseEntity<Object> response;
-
-		// TODO melhorar else if e tratar retorno null, pensar melhor aqui!!!
-		
-		if (ex instanceof QueryStringException) {
-			response = handleQueryStringException((QueryStringException) ex, request);
-		} else if (ex instanceof ApiSecurityException) {
-			response = handleApiSecurityException((ApiSecurityException) ex, request);
-		} else if (ex instanceof CategoriaException) {
-			response = handleCategoriaException((CategoriaException) ex, request);
-		} else if (ex instanceof ProdutoException) {
-			response = handleProdutoException((ProdutoException) ex, request);
-		} else {
-			response = handleGenericApiException((GenericApiException) ex, request);
-
-		}
-		
+	@ExceptionHandler({ AbstractAPIRuntimeException.class} )
+	public final ResponseEntity<Object> handleApiException(AbstractAPIRuntimeException ex, WebRequest request) {
+		ResponseEntity<Object> response = handleAbstractAPIRuntimeException(ex);
 		return response;
 	}
 	
-	private ResponseEntity<Object> handleProdutoException(ProdutoException ex, WebRequest request) {
-		// Aqui é esperado http status 400 ou http status 422.
-		
-		// Http status 400
-		int codigoHttp400 = 400;
-		List<Erro> errosHttp400 = ex.filtarErros(codigoHttp400);
-		if (!errosHttp400.isEmpty()) {
-			Errors erroWrapper = new Errors();
-			erroWrapper.setErrors(errosHttp400);
-			return new ResponseEntity<Object>(erroWrapper, HttpStatus.BAD_REQUEST);
-		}
-		
-		// Http status 422
-		int codigoHttp422 = 422;
-		List<Erro> errosHttp422 = ex.filtarErros(codigoHttp422);
-		if (!errosHttp422.isEmpty()) {
-			Errors erroWrapper = new Errors();
-			erroWrapper.setErrors(errosHttp422);
-			return new ResponseEntity<Object>(erroWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
-			
-		}
-		
-		throw new IllegalArgumentException("Tratando ProdutoException: Status não esperado", ex);
-	}
-
-	private ResponseEntity<Object> handleCategoriaException(CategoriaException ex, WebRequest request) {
-		// Aqui é esperado http status 400 ou http status 422.
-		
-		// Http status 400
-		int codigoHttp400 = 400;
-		List<Erro> errosHttp400 = ex.filtarErros(codigoHttp400);
-		if (!errosHttp400.isEmpty()) {
-			Errors erroWrapper = new Errors();
-			erroWrapper.setErrors(errosHttp400);
-			return new ResponseEntity<Object>(erroWrapper, HttpStatus.BAD_REQUEST);
-		}
-		
-		// Http status 422
-		int codigoHttp422 = 422;
-		List<Erro> errosHttp422 = ex.filtarErros(codigoHttp422);
-		if (!errosHttp422.isEmpty()) {
-			Errors erroWrapper = new Errors();
-			erroWrapper.setErrors(errosHttp422);
-			return new ResponseEntity<Object>(erroWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
-			
-		}
-		
-		throw new IllegalArgumentException("Tratando CategoriaException: Status não esperado", ex);
-	}
-
-	private ResponseEntity<Object> handleQueryStringException(QueryStringException ex, WebRequest request) {
-		Errors erros = ex.getErrors();
-		return new ResponseEntity<Object>(erros, HttpStatus.BAD_REQUEST);
-	}
-
-	private ResponseEntity<Object> handleApiSecurityException(ApiSecurityException ex, WebRequest request) {
-		Errors erros = new Errors();
-		// Dois códigos de status de erro esperados:
-		
+	
+	/**
+	 * Realiza o tratamento das exceções da API.
+	 * 
+	 * @param ex exceção da API.
+	 * @return response contendo uma mensagem de erro e código do protocolo HTTP para o client.
+	 */
+	private ResponseEntity<Object> handleAbstractAPIRuntimeException(AbstractAPIRuntimeException ex) {
 		// 403 - Forbidden
 		int codigoHttp403 = 403;
 		List<Erro> erros403 = ex.filtarErros(codigoHttp403);
 		if (!erros403.isEmpty()) {
-			erros.setErrors(erros403);
-			return new ResponseEntity<Object>(erros, HttpStatus.FORBIDDEN);
+			Errors erroWrapper = new Errors();
+			erroWrapper.setErrors(erros403);
+			ResponseEntity<Object> forbidden = new ResponseEntity<Object>(erroWrapper, HttpStatus.FORBIDDEN);
+			return forbidden;
 		}
 		
 		// 401 - Unauthorized
 		int codigoHttp401 = 401;
 		List<Erro> erros401 = ex.filtarErros(codigoHttp401);
 		if (!erros401.isEmpty()) {
-			erros.setErrors(erros401);
-			return new ResponseEntity<Object>(erros, HttpStatus.UNAUTHORIZED);
+			Errors erroWrapper = new Errors();
+			erroWrapper.setErrors(erros401);
+			ResponseEntity<Object> unauthorized = new ResponseEntity<Object>(erroWrapper, HttpStatus.UNAUTHORIZED);
+			return unauthorized;
 		}
 	
-		throw new IllegalArgumentException("Código de erro não esperado.");
+
+		// Http status 400
+		int codigoHttp400 = 400;
+		List<Erro> erros400 = ex.filtarErros(codigoHttp400);
+		if (!erros400.isEmpty()) {
+			Errors erroWrapper = new Errors();
+			erroWrapper.setErrors(erros400);
+			ResponseEntity<Object> badRequest = new ResponseEntity<Object>(erroWrapper, HttpStatus.BAD_REQUEST);
+			return badRequest;
+		}
+		
+		// Http status 422
+		int codigoHttp422 = 422;
+		List<Erro> errosHttp422 = ex.filtarErros(codigoHttp422);
+		if (!errosHttp422.isEmpty()) {
+			Errors erroWrapper = new Errors();
+			erroWrapper.setErrors(errosHttp422);
+			ResponseEntity<Object> regraDeNegocio = new ResponseEntity<Object>(erroWrapper, HttpStatus.UNPROCESSABLE_ENTITY);
+			return regraDeNegocio;
+			
+		}
+		
+		// Http status nao esperado, retornando Http status 500 como padrao.
+		ResponseEntity<Object> erroInterno = responseHttpStatus500();
+		return erroInterno;
 	}
 
-	private ResponseEntity<Object> handleGenericApiException(GenericApiException ex, WebRequest request) {
-		Errors errors = ex.getErrors();
-		return new ResponseEntity<Object>(errors, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
 
+	private ResponseEntity<Object> responseHttpStatus500() {
+		String[] parametros = null;
+		CodigoStatusAPI chave = CodigoStatusAPI.HTTP_500;
+		Erro erroStatus500 = CodigoAPIService.criarErro(chave, parametros);
+		Errors erroWrapper = new Errors();
+		erroWrapper.addErrorsItem(erroStatus500);
+		ResponseEntity<Object> erroInterno = new ResponseEntity<Object>(erroWrapper, HttpStatus.INTERNAL_SERVER_ERROR);
+		return erroInterno;
+	}
+	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
