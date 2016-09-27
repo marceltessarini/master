@@ -1,0 +1,764 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Realiza suas compras em nossa loja virtual!",
+    "version" : "1.0.0",
+    "title" : "Loja Virtual",
+    "contact" : { }
+  },
+  "host" : "localhost:8090",
+  "basePath" : "/api/loja/v1",
+  "tags" : [ {
+    "name" : "Categorias",
+    "description" : "Recurso para gerenciar categorias."
+  }, {
+    "name" : "Produtos",
+    "description" : "Recurso para gerenciar produtos."
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/categorias" : {
+      "get" : {
+        "tags" : [ "Categorias" ],
+        "summary" : "Operação utilizada para listar categorias.",
+        "description" : "Operação utilizada para listar categorias.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "status",
+          "in" : "query",
+          "description" : "Filtra categorias por status: ATIVO, INATIVO ou TODOS.\nValor padrão é ATIVO.",
+          "required" : false,
+          "type" : "string",
+          "x-example" : ""
+        }, {
+          "name" : "nomeCategoria",
+          "in" : "query",
+          "description" : "Filtra categorias por nome.",
+          "required" : false,
+          "type" : "string",
+          "x-example" : ""
+        }, {
+          "name" : "produto",
+          "in" : "query",
+          "description" : "Filtra categorias pelo nome ou descrição do produto associada a categoria.",
+          "required" : false,
+          "type" : "string",
+          "x-example" : ""
+        }, {
+          "name" : "order",
+          "in" : "query",
+          "description" : "Recebe o(s) nome(s) do(s) campo(s) da categoria  a ser ordenado. Campos disponível são: nomeCategoria.",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "order=-nome-categoria"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Número da página.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64",
+          "x-example" : ""
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Total de registros de uma página.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Lista de categorias.",
+            "schema" : {
+              "$ref" : "#/definitions/Categorias"
+            }
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Categorias" ],
+        "summary" : "Operação utilizada para criar uma categoria.",
+        "description" : "Operação utilizada para criar uma categoria.",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Categoria"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Criado com sucesso."
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          },
+          "422" : {
+            "description" : "Exceções de negócio."
+          }
+        }
+      }
+    },
+    "/categorias/{idCategoria}" : {
+      "get" : {
+        "tags" : [ "Categorias" ],
+        "summary" : "Operação utilizada para consultar a categoria informada.",
+        "description" : "Operação utilizada para consultar a categoria informada.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idCategoria",
+          "in" : "path",
+          "description" : "Identificador da Categoria.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Sucesso.",
+            "schema" : {
+              "$ref" : "#/definitions/Categoria"
+            }
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Categorias" ],
+        "summary" : "Operação utilizada para atualizar a categoria informada.",
+        "description" : "Operação utilizada para atualizar a categoria informada.",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idCategoria",
+          "in" : "path",
+          "description" : "Identificador da Categoria.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Categoria"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Atualizado com sucesso."
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          },
+          "422" : {
+            "description" : "Exceções de negócio."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Categorias" ],
+        "summary" : "Operação utilizada para inativar a categoria informada.",
+        "description" : "Operação utilizada para inativar a categoria informada.",
+        "parameters" : [ {
+          "name" : "idCategoria",
+          "in" : "path",
+          "description" : "Identificador da Categoria.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Registro inativado com sucesso."
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          }
+        }
+      }
+    },
+    "/produtos" : {
+      "get" : {
+        "tags" : [ "Produtos" ],
+        "summary" : "Operação utilizada para listar produtos.",
+        "description" : "Operação utilizada para listar produtos.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "nome",
+          "in" : "query",
+          "description" : "Filtra produtos por nome.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "descricao",
+          "in" : "query",
+          "description" : "Filtra produtos por descrição.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "todos",
+          "in" : "query",
+          "description" : "Filtra produtos por nome e descrição. Se esta opção for escolhida, os filtros nome e descricao serão ignorados.",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "idCategoria",
+          "in" : "query",
+          "description" : "Filtra produtos da categoria informada.",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "order",
+          "in" : "query",
+          "description" : "Recebe o(s) nome(s) do(s) campo(s) do produto  a ser ordenado. Campos disponível são: nome e preco",
+          "required" : false,
+          "type" : "string",
+          "x-example" : "order=nome,-preco"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Número da página.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Total de registros de uma página.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Sucesso.",
+            "schema" : {
+              "$ref" : "#/definitions/Produtos"
+            }
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Produtos" ],
+        "summary" : "Operação utilizada para criar um produto.",
+        "description" : "Operação utilizada para criar um produto.",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Produto"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Criado com sucesso."
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          },
+          "422" : {
+            "description" : "Exceções de negócio."
+          }
+        }
+      }
+    },
+    "/produtos/{idProduto}" : {
+      "get" : {
+        "tags" : [ "Produtos" ],
+        "summary" : "Operação utilizada para consultar o produto informado.",
+        "description" : "Operação utilizada para consultar o produto informado.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idProduto",
+          "in" : "path",
+          "description" : "Identificador do Produto.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Sucesso.",
+            "schema" : {
+              "$ref" : "#/definitions/Produto"
+            }
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Produtos" ],
+        "summary" : "Operação utilizada para atualizar o produto informado.",
+        "description" : "Operação utilizada para atualizar o produto informado.",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idProduto",
+          "in" : "path",
+          "description" : "Identificador do Produto.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Produto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Atualizado com sucesso."
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          },
+          "422" : {
+            "description" : "Exceções de negócio."
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Produtos" ],
+        "summary" : "Operação utilizada para desativar o produto informado.",
+        "description" : "Operação utilizada para desativar o produto informado.",
+        "parameters" : [ {
+          "name" : "idProduto",
+          "in" : "path",
+          "description" : "Identificador do Produto.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Registro inativado com sucesso."
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          }
+        }
+      }
+    },
+    "/produtos/{idProduto}/ranking" : {
+      "get" : {
+        "tags" : [ "Produtos" ],
+        "summary" : "Operação utilizada para consultar os rankings do produto informado.",
+        "description" : "Operação utilizada para consultar os rankings do produto informado.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idProduto",
+          "in" : "path",
+          "description" : "Identificador do Produto.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "order",
+          "in" : "query",
+          "description" : "Recebe o(s) nome(s) do(s) campo(s) do ranking do produto  a ser ordenado. Campos disponível são: nota",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int32",
+          "x-example" : "order=nota"
+        }, {
+          "name" : "page",
+          "in" : "query",
+          "description" : "Número da página.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "Total de registros de uma página.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Sucesso.",
+            "schema" : {
+              "$ref" : "#/definitions/Rankings"
+            }
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Produtos" ],
+        "summary" : "Operação utilizada para criar um ranking do produto.",
+        "description" : "Operação utilizada para criar um ranking do produto.",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idProduto",
+          "in" : "path",
+          "description" : "Identificador do Produto.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Ranking"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Criado com sucesso."
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          }
+        }
+      }
+    },
+    "/produtos/{idProduto}/ranking/notas" : {
+      "get" : {
+        "tags" : [ "Produtos" ],
+        "summary" : "Operação utilizada para calcular as notas do ranking do produto.",
+        "description" : "Operação utilizada para calcular as notas do ranking do produto.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "idProduto",
+          "in" : "path",
+          "description" : "Identificador do produto.",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Sucesso.",
+            "schema" : {
+              "$ref" : "#/definitions/Nota"
+            }
+          },
+          "400" : {
+            "description" : "Requisição mal formada."
+          },
+          "401" : {
+            "description" : "Requisição requer autenticação."
+          },
+          "403" : {
+            "description" : "Requisição negada."
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Categoria" : {
+      "type" : "object",
+      "required" : [ "descricao", "nome" ],
+      "properties" : {
+        "descricao" : {
+          "type" : "string",
+          "description" : "Descrição da categoria."
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Identificador da categoria."
+        },
+        "idCategoria" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Identificador da categoria pai, se tiver."
+        },
+        "nome" : {
+          "type" : "string",
+          "description" : "Nome da categoria. É único."
+        },
+        "status" : {
+          "type" : "string",
+          "description" : "Status da categoria: ATIVO, INATIVO"
+        }
+      },
+      "description" : "Representa uma categoria."
+    },
+    "Categorias" : {
+      "type" : "object",
+      "properties" : {
+        "categorias" : {
+          "type" : "array",
+          "description" : "Lista de categorias.",
+          "items" : {
+            "$ref" : "#/definitions/Categoria"
+          }
+        },
+        "metadata" : {
+          "type" : "array",
+          "description" : "Informações de paginação.",
+          "items" : {
+            "$ref" : "#/definitions/Metadata"
+          }
+        }
+      },
+      "description" : "Encapsula uma lista de categorias e meta informações, tais como paginação."
+    },
+    "Erro" : {
+      "type" : "object",
+      "properties" : {
+        "codigoDaAPI" : {
+          "type" : "string",
+          "description" : "Código do erro da API."
+        },
+        "codigoHttp" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Código de erro do protocolo HTTP."
+        },
+        "mensagem" : {
+          "type" : "string",
+          "description" : "Mensagem do erro."
+        },
+        "tipo" : {
+          "type" : "string",
+          "description" : "Tipo do erro."
+        }
+      },
+      "description" : "Estrutura que descreve um erro da API."
+    },
+    "Errors" : {
+      "type" : "object",
+      "properties" : {
+        "errors" : {
+          "type" : "array",
+          "description" : "Lista de erros.",
+          "items" : {
+            "$ref" : "#/definitions/Erro"
+          }
+        }
+      },
+      "description" : "Lista de erros."
+    },
+    "Metadata" : {
+      "type" : "object",
+      "properties" : {
+        "chave" : {
+          "type" : "string",
+          "description" : "Chave."
+        },
+        "valor" : {
+          "type" : "string",
+          "description" : "Valor."
+        }
+      },
+      "description" : "Representa um par de chave/valor."
+    },
+    "Nota" : {
+      "type" : "object",
+      "properties" : {
+        "maiorNota" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Maior nota do ranking."
+        },
+        "media" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Média do ranking."
+        },
+        "menorNota" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Menor nota do ranking."
+        }
+      },
+      "description" : "Representa uma nota."
+    },
+    "Produto" : {
+      "type" : "object",
+      "required" : [ "categorias", "descricao", "nome", "preco" ],
+      "properties" : {
+        "categorias" : {
+          "type" : "array",
+          "description" : "Categorias do produto.",
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        },
+        "descricao" : {
+          "type" : "string",
+          "description" : "Descrição do produto."
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Identificador do produto."
+        },
+        "nome" : {
+          "type" : "string",
+          "description" : "Nome do produto. É único."
+        },
+        "preco" : {
+          "type" : "number",
+          "format" : "double",
+          "description" : "Preço do produto."
+        }
+      },
+      "description" : "Representa um produto."
+    },
+    "Produtos" : {
+      "type" : "object",
+      "properties" : {
+        "metadata" : {
+          "type" : "array",
+          "description" : "Informações de paginação.",
+          "items" : {
+            "$ref" : "#/definitions/Metadata"
+          }
+        },
+        "produtos" : {
+          "type" : "array",
+          "description" : "Lista de produtos.",
+          "items" : {
+            "$ref" : "#/definitions/Produto"
+          }
+        }
+      },
+      "description" : "Encapsula uma lista de produtos e meta informações, tais como paginação."
+    },
+    "Ranking" : {
+      "type" : "object",
+      "required" : [ "idProduto", "nota" ],
+      "properties" : {
+        "comentario" : {
+          "type" : "string",
+          "description" : "Comentário do ranking."
+        },
+        "id" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Identificador do ranking."
+        },
+        "idProduto" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "Produto do ranking."
+        },
+        "nota" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "Nota do ranking."
+        }
+      },
+      "description" : "Representa o ranking de um produto."
+    },
+    "Rankings" : {
+      "type" : "object",
+      "properties" : {
+        "metadata" : {
+          "type" : "array",
+          "description" : "Informações de paginação.",
+          "items" : {
+            "$ref" : "#/definitions/Metadata"
+          }
+        },
+        "rankings" : {
+          "type" : "array",
+          "description" : "Lista de rankings do produto.",
+          "items" : {
+            "$ref" : "#/definitions/Ranking"
+          }
+        }
+      },
+      "description" : "Encapsula uma lista de rankings do produto e meta informações, tais como paginação."
+    }
+  }
+}
