@@ -1,5 +1,11 @@
 package com.marceltessarini.lojavirtual.rs.controller.produto;
 
+/**
+ * Parâmetros da request para consultar produtos.
+ * 
+ * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
+ *
+ */
 public class GetProdutosRequest {
 
 	private Long page;

@@ -7,6 +7,12 @@ import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 
+/**
+ * Exceção genérica da API.
+ * 
+ * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
+ *
+ */
 public class GenericApiException extends AbstractAPIRuntimeException {
 
 	private static final long serialVersionUID = 1L;

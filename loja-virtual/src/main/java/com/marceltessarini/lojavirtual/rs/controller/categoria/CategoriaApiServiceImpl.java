@@ -22,6 +22,12 @@ import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Metadata;
 import com.marceltessarini.lojavirtual.rs.utils.PaginacaoUtils;
 
+/**
+ * Trata as requisições do recurso Categoria.
+ * 
+ * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
+ *
+ */
 @Service
 public class CategoriaApiServiceImpl implements CategoriaApiService {
 

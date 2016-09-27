@@ -1,5 +1,11 @@
 package com.marceltessarini.lojavirtual.rs.controller.categoria;
 
+/**
+ * Parâmetros da request para consultar categorias.
+ * 
+ * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
+ *
+ */
 public class GetCategoriasRequest {
 
 	private Long page;

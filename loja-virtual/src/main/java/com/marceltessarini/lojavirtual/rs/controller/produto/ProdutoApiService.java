@@ -8,6 +8,11 @@ import com.marceltessarini.lojavirtual.rs.model.Produtos;
 import com.marceltessarini.lojavirtual.rs.model.Ranking;
 import com.marceltessarini.lojavirtual.rs.model.Rankings;
 
+/**
+ * 
+ * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
+ *
+ */
 public interface ProdutoApiService {
 
 	ResponseEntity<Produtos> getProdutos(GetProdutosRequest request);

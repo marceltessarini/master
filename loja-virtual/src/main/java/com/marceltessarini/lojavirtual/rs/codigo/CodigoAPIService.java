@@ -5,6 +5,12 @@ import java.util.List;
 
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 
+/**
+ * Códigos de erro da camada Rest.
+ * 
+ * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
+ *
+ */
 public class CodigoAPIService {
 
 	public enum CodigoStatusAPI {

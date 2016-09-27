@@ -21,8 +21,12 @@ import com.marceltessarini.lojavirtual.rs.exception.AbstractAPIRuntimeException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Errors;
 
-// TODO comentar a classe e retornar erro http 500 no final para todos caso algo sai do controle.
-
+/**
+ * Realiza o tratamento de exceção da camada Rest.
+ * 
+ * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
+ *
+ */
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 

@@ -6,6 +6,12 @@ import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Errors;
 
+/**
+ * Exceção base da API.
+ * 
+ * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
+ *
+ */
 public abstract class AbstractAPIRuntimeException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;

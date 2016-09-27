@@ -25,6 +25,12 @@ import com.marceltessarini.lojavirtual.rs.model.Ranking;
 import com.marceltessarini.lojavirtual.rs.model.Rankings;
 import com.marceltessarini.lojavirtual.rs.utils.PaginacaoUtils;
 
+/**
+ * Trata as requisições do recurso Produto.
+ * 
+ * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
+ *
+ */
 @Service
 public class ProdutoApiServiceImpl implements ProdutoApiService {
 

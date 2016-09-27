@@ -6,7 +6,7 @@ import java.util.List;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 
 /**
- * Exceção para tratar valores de parâmetros passados na consulta.
+ * Exceção para tratar valores dos parâmetros passados em uma request.
  * 
  * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
  *

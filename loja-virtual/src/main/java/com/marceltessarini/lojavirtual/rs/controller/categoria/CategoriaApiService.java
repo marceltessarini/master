@@ -5,6 +5,10 @@ import org.springframework.http.ResponseEntity;
 import com.marceltessarini.lojavirtual.rs.model.Categoria;
 import com.marceltessarini.lojavirtual.rs.model.Categorias;
 
+/**
+ * @author <a href="mailto:marceltessarini@gmail.com">Marcel Tessarini</a>
+ *
+ */
 public interface CategoriaApiService {
 
 	ResponseEntity<Categorias> getCategorias(GetCategoriasRequest request);
