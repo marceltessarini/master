@@ -842,18 +842,18 @@
     "Produtos": {
       "type": "object",
       "properties": {
-        "metadata": {
-          "type": "array",
-          "description": "Informações de paginação.",
-          "items": {
-            "$ref": "#/definitions/Metadata"
-          }
-        },
         "produtos": {
           "type": "array",
           "description": "Lista de produtos.",
           "items": {
             "$ref": "#/definitions/Produto"
+          }
+        },
+        "metadata": {
+          "type": "array",
+          "description": "Informações de paginação.",
+          "items": {
+            "$ref": "#/definitions/Metadata"
           }
         }
       },
@@ -891,18 +891,18 @@
     "Rankings": {
       "type": "object",
       "properties": {
-        "metadata": {
-          "type": "array",
-          "description": "Informações de paginação.",
-          "items": {
-            "$ref": "#/definitions/Metadata"
-          }
-        },
         "rankings": {
           "type": "array",
           "description": "Lista de rankings do produto.",
           "items": {
             "$ref": "#/definitions/Ranking"
+          }
+        },
+        "metadata": {
+          "type": "array",
+          "description": "Informações de paginação.",
+          "items": {
+            "$ref": "#/definitions/Metadata"
           }
         }
       },
