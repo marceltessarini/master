@@ -44,9 +44,12 @@ public class CodigoAPIService {
 		PRODUTO_002_007,
 		PRODUTO_002_008,
 		PRODUTO_002_009,
-		RANKING_002_010,
-		RANKING_002_011,
-		RANKING_002_012;
+		
+		// RankingException
+		RANKING_003_001,
+		RANKING_003_002,
+		RANKING_003_003,
+		RANKING_003_004;
 		
 		public static CodigoStatusAPI getCodigoStatusAPI(String codigo) {
 			CodigoStatusAPI[] values = CodigoStatusAPI.values();
@@ -303,27 +306,36 @@ public class CodigoAPIService {
 			tipo = "ProdutoException";
 			break;
 
-		case RANKING_002_010:
-			codigoHttp = 422;
-			codigoDaAPI = "002.010";
-			mensagem = "O valor da nota do ranking deve estar entre 0 e 10.";
-			tipo = "ProdutoException";
-			break;
-
-		case RANKING_002_011:
+		case RANKING_003_001:
 			codigoHttp = 400;
-			codigoDaAPI = "002.011";
+			codigoDaAPI = "003.001";
 			mensagem = "O campo nota do ranking é obrigatório.";
-			tipo = "ProdutoException";
+			tipo = "RankingException";
 			break;
 
-		case RANKING_002_012:
+		case RANKING_003_002:
 			codigoHttp = 422;
-			codigoDaAPI = "002.012";
-			mensagem = "O campo idProduto informado não existe.";
-			tipo = "ProdutoException";
+			codigoDaAPI = "003.002";
+			mensagem = "O valor da nota do ranking deve estar entre 0 e 10.";
+			tipo = "RankingException";
 			break;
+
+		case RANKING_003_003:
+			codigoHttp = 422;
+			codigoDaAPI = "003.003";
+			mensagem = "O campo idProduto informado não existe.";
+			tipo = "RankingException";
+			break;
+
+		case RANKING_003_004:
+			codigoHttp = 400;
+			codigoDaAPI = "003.004";
+			mensagem = "O campo idProduto é obrigatório.";
+			tipo = "RankingException";
+			break;
+
 			
+
 		default:
 			throw new IllegalArgumentException("Código da API não esperadao: " + chave);
 		}
