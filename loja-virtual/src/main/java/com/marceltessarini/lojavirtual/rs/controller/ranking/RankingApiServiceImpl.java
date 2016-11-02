@@ -5,16 +5,20 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
+import com.marceltessarini.lojavirtual.rs.exception.RankingException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Metadata;
+import com.marceltessarini.lojavirtual.rs.model.Produto;
 import com.marceltessarini.lojavirtual.rs.model.Ranking;
 import com.marceltessarini.lojavirtual.rs.model.Rankings;
 import com.marceltessarini.lojavirtual.rs.utils.PaginacaoUtils;
@@ -138,8 +142,37 @@ public class RankingApiServiceImpl implements RankingApiService {
 
 	@Override
 	public ResponseEntity<Void> salvar(Ranking ranking) {
-		// TODO Auto-generated method stub
-		return null;
+		// ------------------------------
+		// simulando, fake!
+		Long idProduto = ranking.getIdProduto();
+		simulandoErroAoSalvar(idProduto);
+		// ------------------------------
+		ResponseEntity<Void> response = adicionarRanking(ranking);
+		return response;
+	}
+
+	private void simulandoErroAoSalvar(Long idProduto) {
+		if (idProduto == 10) {
+			// Produto nao existe!
+			// RANKING_003_003
+			List<Erro> itensErro = new ArrayList<>();
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.RANKING_003_003;
+			Erro erro = CodigoAPIService.criarErro(chaveErro, parametros);
+			itensErro.add(erro);
+			
+			RankingException.lancarSeTiverErros(itensErro);
+
+		}
+	}
+
+	private ResponseEntity<Void> adicionarRanking(Ranking ranking) {
+		// Fake!
+		String location = "/api/loja/v1/ranking/456";
+		
+		MultiValueMap<String, String> headers = new HttpHeaders();
+		headers.add("Location", location);
+		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
 

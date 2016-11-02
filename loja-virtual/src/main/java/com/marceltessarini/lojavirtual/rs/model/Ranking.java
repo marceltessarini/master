@@ -33,9 +33,9 @@ public class Ranking   {
   private Long idProduto = null;
 
   @JsonProperty("nota")
-  @NotNull(message = "RANKING_002_011")
-  @Min(value = 0, message = "RANKING_002_010")
-  @Max(value = 10, message = "RANKING_002_010")
+  @NotNull(message = "RANKING_003_001")
+  @Min(value = 0, message = "RANKING_003_002")
+  @Max(value = 10, message = "RANKING_003_002")
   private Integer nota = null;
 
   @JsonProperty("comentario")
