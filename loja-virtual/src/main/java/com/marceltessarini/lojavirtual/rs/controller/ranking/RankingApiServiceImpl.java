@@ -136,5 +136,11 @@ public class RankingApiServiceImpl implements RankingApiService {
 		return true;
 	}
 
+	@Override
+	public ResponseEntity<Void> salvar(Ranking ranking) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

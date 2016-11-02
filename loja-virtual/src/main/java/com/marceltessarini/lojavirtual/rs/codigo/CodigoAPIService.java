@@ -52,7 +52,8 @@ public class CodigoAPIService {
 		// RankingException
 		RANKING_003_001,
 		RANKING_003_002,
-		RANKING_003_003;
+		RANKING_003_003,
+		RANKING_003_004;
 		
 		public static CodigoStatusAPI getCodigoStatusAPI(String codigo) {
 			CodigoStatusAPI[] values = CodigoStatusAPI.values();
@@ -350,6 +351,15 @@ public class CodigoAPIService {
 			mensagem = "O campo idProduto informado não existe.";
 			tipo = "RankingException";
 			break;
+
+		case RANKING_003_004:
+			codigoHttp = 400;
+			codigoDaAPI = "003.004";
+			mensagem = "O campo idProduto é obrigatório.";
+			tipo = "RankingException";
+			break;
+
+			
 
 		default:
 			throw new IllegalArgumentException("Código da API não esperadao: " + chave);

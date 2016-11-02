@@ -29,6 +29,7 @@ public class Ranking   {
   private Long id = null;
 
   @JsonProperty("idProduto")
+  @NotNull(message = "RANKING_003_004")
   private Long idProduto = null;
 
   @JsonProperty("nota")

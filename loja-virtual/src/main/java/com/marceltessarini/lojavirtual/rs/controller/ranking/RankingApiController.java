@@ -1,8 +1,11 @@
 package com.marceltessarini.lojavirtual.rs.controller.ranking;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.marceltessarini.lojavirtual.rs.model.Nota;
 import com.marceltessarini.lojavirtual.rs.model.Ranking;
@@ -43,9 +46,10 @@ public class RankingApiController implements RankingApi {
 	}
 
 	@Override
-	public ResponseEntity<Void> rankingPost(Ranking body) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Void> rankingPost(@Valid @RequestBody Ranking ranking) {
+		ranking.setId(null);
+		ResponseEntity<Void> response = rankingApiService.salvar(ranking);
+		return response;
 	}
 
 }
