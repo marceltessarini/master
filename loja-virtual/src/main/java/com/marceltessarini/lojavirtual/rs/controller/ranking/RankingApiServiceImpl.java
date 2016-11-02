@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
-import com.marceltessarini.lojavirtual.rs.controller.produto.GetProdutosRequest;
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
