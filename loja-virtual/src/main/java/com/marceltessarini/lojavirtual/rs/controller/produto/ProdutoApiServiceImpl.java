@@ -18,11 +18,8 @@ import com.marceltessarini.lojavirtual.rs.exception.ProdutoException;
 import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Metadata;
-import com.marceltessarini.lojavirtual.rs.model.Nota;
 import com.marceltessarini.lojavirtual.rs.model.Produto;
 import com.marceltessarini.lojavirtual.rs.model.Produtos;
-import com.marceltessarini.lojavirtual.rs.model.Ranking;
-import com.marceltessarini.lojavirtual.rs.model.Rankings;
 import com.marceltessarini.lojavirtual.rs.utils.PaginacaoUtils;
 
 /**
@@ -345,110 +342,5 @@ public class ProdutoApiServiceImpl implements ProdutoApiService {
 		// -----------------------------------------------------------
 		
 	}
-
-	@Override
-	public ResponseEntity<Rankings> getRankingsDoProduto(Long idProduto) {
-		// -----------------------------------------------------------
-		// Fake
-		simmulandoProblemasComSeguranca(idProduto);
-		
-		Rankings rankings = criarRankings(idProduto);
-		
-		// -----------------------------------------------------------
-		ResponseEntity<Rankings> response = new ResponseEntity<Rankings>(rankings, HttpStatus.OK);
-		return response;
-	}
-
-	private Rankings criarRankings(Long idProduto) {
-		Rankings rakingsWrapper = new  Rankings();
-		
-		List<Ranking> rankings = rakingsWrapper.getRankings();
-
-		Ranking r1 = criarRanking(1L, idProduto, 8, "Bom livro");
-		Ranking r2 = criarRanking(2L, idProduto, 1, "Ruim!");
-		Ranking r3 = criarRanking(3L, idProduto, 8, "Recomendo");
-		Ranking r4 = criarRanking(4L, idProduto, 5, "Razoável!");
-		Ranking r5 = criarRanking(5L, idProduto, 8, "Joia!");
-		
-		rankings.add(r1);
-		rankings.add(r2);
-		rankings.add(r3);
-		rankings.add(r4);
-		rankings.add(r5);
-		
-
-		String url = "/api/loja/v1/produtos/" + idProduto + "/ranking";
-		List<Metadata> paginacao = PaginacaoUtils.criarMetadataPaginacao(10L, 10L, 10L, url);
-		rakingsWrapper.setMetadata(paginacao);		
-
-		return rakingsWrapper;
-	}
-
-	private Ranking criarRanking(Long id, Long idProduto, Integer nota, String comentario) {
-		Ranking r1 = new Ranking();
-		r1.setId(id);
-		r1.setIdProduto(idProduto);
-		r1.setNota(nota);
-		r1.setComentario(comentario);
-		return r1;
-	}
-
-	@Override
-	public ResponseEntity<Void> salvarRanking(Ranking ranking) {
-		validarRanking(ranking);
-		
-		// ---------------------------------------------------
-		// Simulando problemas com seguranca
-		Long idProduto = ranking.getIdProduto();
-		simmulandoProblemasComSeguranca(idProduto);
-		// ---------------------------------------------------
-		
-		// Fake!
-		ResponseEntity<Void> response = adicionarRanking();
-		return response;
-	}
-
-	private void validarRanking(Ranking ranking) {
-		// Fake! 
-		// Simulando produto nao existe
-		Long idProduto = ranking.getIdProduto();
-		if (idProduto == 455) {
-			
-
-			String[] parametros = null;
-			CodigoStatusAPI chave = CodigoStatusAPI.RANKING_002_012;
-			Erro erroIdProdutoNaoExiste = CodigoAPIService.criarErro(chave, parametros);
-
-			
-			ProdutoException.lancarSeTiverErro(erroIdProdutoNaoExiste);
-		}
-		
-	}
-
-	private ResponseEntity<Void> adicionarRanking() {
-		String location = "/api/loja/v1/produtos/456/ranking/12";
-		MultiValueMap<String, String> headers = new HttpHeaders();
-		headers.add("Location", location);
-		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
-	}
-
-	@Override
-	public ResponseEntity<Nota> getNotasDoRankingDoProduto(Long idProduto) {
-		
-		// --------------------------------------------------------------------------
-		// Simulando problemas com seguranca
-		simmulandoProblemasComSeguranca(idProduto);
-		// --------------------------------------------------------------------------
-		
-		// Fake!
-		Nota nota = new Nota();
-		nota.setMaiorNota(9L);
-		nota.setMedia(6L);
-		nota.setMenorNota(3L);
-		
-		ResponseEntity<Nota> response = new ResponseEntity<Nota>(nota, HttpStatus.OK);
-		return response;
-	}
-
 
 }

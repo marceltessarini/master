@@ -8,11 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.marceltessarini.lojavirtual.rs.model.Nota;
 import com.marceltessarini.lojavirtual.rs.model.Produto;
 import com.marceltessarini.lojavirtual.rs.model.Produtos;
-import com.marceltessarini.lojavirtual.rs.model.Ranking;
-import com.marceltessarini.lojavirtual.rs.model.Rankings;
 
 import io.swagger.annotations.ApiParam;
 
@@ -52,30 +49,6 @@ public class ProdutosApiController implements ProdutosApi {
 			@Valid @RequestBody Produto body) {
 		body.setId(idProduto);
 		ResponseEntity<Void> response = produtoApiService.salvar(body);
-		return response;
-	}
-
-	@Override
-	public ResponseEntity<Rankings> produtosIdProdutoRankingGet(
-			@ApiParam(value = "Identificador do Produto.", required = true) @PathVariable("idProduto") Long idProduto,
-			Long page, Long limit, Integer order) {
-		return produtoApiService.getRankingsDoProduto(idProduto);
-	}
-
-	@Override
-	public ResponseEntity<Nota> produtosIdProdutoRankingNotasGet(
-			@ApiParam(value = "Identificador do produto.", required = true) @PathVariable("idProduto") Long idProduto) {
-		ResponseEntity<Nota> response = produtoApiService.getNotasDoRankingDoProduto(idProduto);
-		return response;
-	}
-
-	@Override
-	public ResponseEntity<Void> produtosIdProdutoRankingPost(
-			@ApiParam(value = "Identificador do Produto.", required = true) @PathVariable("idProduto") Long idProduto,
-			@Valid @RequestBody Ranking body) {
-		body.setId(null);
-		body.setIdProduto(idProduto);
-		ResponseEntity<Void> response = produtoApiService.salvarRanking(body);
 		return response;
 	}
 

@@ -44,10 +44,6 @@ public class CodigoAPIService {
 		PRODUTO_002_007,
 		PRODUTO_002_008,
 		PRODUTO_002_009,
-		// TODO remover
-		RANKING_002_010,
-		RANKING_002_011,
-		RANKING_002_012,
 		
 		// RankingException
 		RANKING_003_001,
@@ -310,27 +306,6 @@ public class CodigoAPIService {
 			tipo = "ProdutoException";
 			break;
 
-		case RANKING_002_010:
-			codigoHttp = 422;
-			codigoDaAPI = "002.010";
-			mensagem = "O valor da nota do ranking deve estar entre 0 e 10.";
-			tipo = "ProdutoException";
-			break;
-
-		case RANKING_002_011:
-			codigoHttp = 400;
-			codigoDaAPI = "002.011";
-			mensagem = "O campo nota do ranking é obrigatório.";
-			tipo = "ProdutoException";
-			break;
-
-		case RANKING_002_012:
-			codigoHttp = 422;
-			codigoDaAPI = "002.012";
-			mensagem = "O campo idProduto informado não existe.";
-			tipo = "ProdutoException";
-			break;
-			
 		case RANKING_003_001:
 			codigoHttp = 400;
 			codigoDaAPI = "003.001";

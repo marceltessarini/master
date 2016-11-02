@@ -7,11 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.marceltessarini.lojavirtual.rs.model.Nota;
 import com.marceltessarini.lojavirtual.rs.model.Produto;
 import com.marceltessarini.lojavirtual.rs.model.Produtos;
-import com.marceltessarini.lojavirtual.rs.model.Ranking;
-import com.marceltessarini.lojavirtual.rs.model.Rankings;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -92,58 +89,6 @@ public interface ProdutosApi {
 			,
 
 			@ApiParam(value = "") @RequestBody Produto body
-
-	);
-
-	@ApiOperation(value = "Operação utilizada para consultar os rankings do produto informado.", notes = "Operação utilizada para consultar os rankings do produto informado.", response = Rankings.class, tags = {
-			"Produtos", })
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso.", response = Rankings.class),
-			@ApiResponse(code = 400, message = "Requisição mal formada.", response = Rankings.class),
-			@ApiResponse(code = 401, message = "Requisição requer autenticação.", response = Rankings.class),
-			@ApiResponse(code = 403, message = "Requisição negada.", response = Rankings.class) })
-	@RequestMapping(value = "/produtos/{idProduto}/ranking", produces = {
-			"application/json" }, method = RequestMethod.GET)
-	ResponseEntity<Rankings> produtosIdProdutoRankingGet(
-			@ApiParam(value = "Identificador do Produto.", required = true) @PathVariable("idProduto") Long idProduto
-
-			,
-			@ApiParam(value = "Número da página.", required = true) @RequestParam(value = "page", required = true) Long page
-
-			,
-			@ApiParam(value = "Total de registros de uma página.", required = true) @RequestParam(value = "limit", required = true) Long limit
-
-			,
-			@ApiParam(value = "Recebe o(s) nome(s) do(s) campo(s) do ranking do produto  a ser ordenado. Campos disponível são: nota") @RequestParam(value = "order", required = false) Integer order
-
-	);
-
-	@ApiOperation(value = "Operação utilizada para calcular as notas do ranking do produto.", notes = "Operação utilizada para calcular as notas do ranking do produto.", response = Nota.class, tags = {
-			"Produtos", })
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Sucesso.", response = Nota.class),
-			@ApiResponse(code = 400, message = "Requisição mal formada.", response = Nota.class),
-			@ApiResponse(code = 401, message = "Requisição requer autenticação.", response = Nota.class),
-			@ApiResponse(code = 403, message = "Requisição negada.", response = Nota.class) })
-	@RequestMapping(value = "/produtos/{idProduto}/ranking/notas", produces = {
-			"application/json" }, method = RequestMethod.GET)
-	ResponseEntity<Nota> produtosIdProdutoRankingNotasGet(
-			@ApiParam(value = "Identificador do produto.", required = true) @PathVariable("idProduto") Long idProduto
-
-	);
-
-	@ApiOperation(value = "Operação utilizada para criar um ranking do produto.", notes = "Operação utilizada para criar um ranking do produto.", response = Void.class, tags = {
-			"Produtos", })
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "Criado com sucesso.", response = Void.class),
-			@ApiResponse(code = 400, message = "Requisição mal formada.", response = Void.class),
-			@ApiResponse(code = 401, message = "Requisição requer autenticação.", response = Void.class),
-			@ApiResponse(code = 403, message = "Requisição negada.", response = Void.class) })
-	@RequestMapping(value = "/produtos/{idProduto}/ranking", consumes = {
-			"application/json" }, method = RequestMethod.POST)
-	ResponseEntity<Void> produtosIdProdutoRankingPost(
-			@ApiParam(value = "Identificador do Produto.", required = true) @PathVariable("idProduto") Long idProduto
-
-			,
-
-			@ApiParam(value = "") @RequestBody Ranking body
 
 	);
 
