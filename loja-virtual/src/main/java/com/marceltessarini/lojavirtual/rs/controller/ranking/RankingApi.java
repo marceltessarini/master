@@ -40,7 +40,7 @@ public interface RankingApi {
 			@ApiParam(value = "Identificador do produto.", required = true) @RequestParam(value = "idProduto", required = true) Long idProduto
 
 			,
-			@ApiParam(value = "Recebe o(s) nome(s) do(s) campo(s) do ranking do produto  a ser ordenado. Campos disponível são: nota") @RequestParam(value = "order", required = false) Integer order
+			@ApiParam(value = "Recebe o(s) nome(s) do(s) campo(s) do ranking do produto  a ser ordenado. Campos disponível são: nota") @RequestParam(value = "order", required = false) String order
 
 	);
 

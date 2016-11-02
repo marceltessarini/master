@@ -1,14 +1,10 @@
 package com.marceltessarini.lojavirtual.rs.controller.ranking;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
-import com.marceltessarini.lojavirtual.rs.model.Metadata;
 import com.marceltessarini.lojavirtual.rs.model.Nota;
-import com.marceltessarini.lojavirtual.rs.model.Produtos;
 import com.marceltessarini.lojavirtual.rs.model.Ranking;
 import com.marceltessarini.lojavirtual.rs.model.Rankings;
 
@@ -17,13 +13,18 @@ import com.marceltessarini.lojavirtual.rs.model.Rankings;
 
 @Controller
 public class RankingApiController implements RankingApi {
+	
+	@Autowired
+	private RankingApiService rankingApiService;
 
 	/**
 	 * Lista os rankings de um produto.
 	 */
 	@Override
-	public ResponseEntity<Rankings> rankingGet(Long page, Long limit, Long idProduto, Integer order) {
-		return null;
+	public ResponseEntity<Rankings> rankingGet(Long page, Long limit, Long idProduto, String order) {
+		RankingsDoProdutoRequest request = new RankingsDoProdutoRequest(page, limit, idProduto, order);
+		ResponseEntity<Rankings> response = rankingApiService.getRankingsDoProduto(request);
+		return response;
 	}
 
 	/**
