@@ -44,9 +44,10 @@ public class RankingApiController implements RankingApi {
 	}
 
 	@Override
-	public ResponseEntity<Nota> rankingNotasIdProdutoGet(Long idProduto) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Nota> rankingNotasIdProdutoGet(
+			@ApiParam(value = "Identificador do produto.", required = true) @PathVariable("idProduto") Long idProduto) {
+		ResponseEntity<Nota> response = rankingApiService.getNotasDoProduto(idProduto);
+		return response;
 	}
 
 	@Override

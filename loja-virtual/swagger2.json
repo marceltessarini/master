@@ -510,7 +510,7 @@
             "in": "query",
             "description": "Recebe o(s) nome(s) do(s) campo(s) do ranking do produto  a ser ordenado. Campos disponível são: nota",
             "required": false,
-            "type": "string"
+            "type": "string",
             "x-example": "order=nota"
           },
           {
@@ -778,6 +778,11 @@
     "Nota": {
       "type": "object",
       "properties": {
+        "idProduto": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Identificador do produto."
+        },
         "maiorNota": {
           "type": "integer",
           "format": "int64",
@@ -837,18 +842,18 @@
     "Produtos": {
       "type": "object",
       "properties": {
-        "produtos": {
-          "type": "array",
-          "description": "Lista de produtos.",
-          "items": {
-            "$ref": "#/definitions/Produto"
-          }
-        },
         "metadata": {
           "type": "array",
           "description": "Informações de paginação.",
           "items": {
             "$ref": "#/definitions/Metadata"
+          }
+        },
+        "produtos": {
+          "type": "array",
+          "description": "Lista de produtos.",
+          "items": {
+            "$ref": "#/definitions/Produto"
           }
         }
       },
@@ -861,6 +866,10 @@
         "nota"
       ],
       "properties": {
+        "comentario": {
+          "type": "string",
+          "description": "Comentário do ranking."
+        },
         "id": {
           "type": "integer",
           "format": "int64",
@@ -875,10 +884,6 @@
           "type": "integer",
           "format": "int32",
           "description": "Nota do ranking."
-        },
-        "comentario": {
-          "type": "string",
-          "description": "Comentário do ranking."
         }
       },
       "description": "Representa o ranking de um produto."
@@ -886,18 +891,18 @@
     "Rankings": {
       "type": "object",
       "properties": {
-        "rankings": {
-          "type": "array",
-          "description": "Lista de rankings do produto.",
-          "items": {
-            "$ref": "#/definitions/Ranking"
-          }
-        },
         "metadata": {
           "type": "array",
           "description": "Informações de paginação.",
           "items": {
             "$ref": "#/definitions/Metadata"
+          }
+        },
+        "rankings": {
+          "type": "array",
+          "description": "Lista de rankings do produto.",
+          "items": {
+            "$ref": "#/definitions/Ranking"
           }
         }
       },

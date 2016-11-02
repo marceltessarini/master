@@ -1,12 +1,11 @@
 package com.marceltessarini.lojavirtual.rs.model;
 
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-
 
 /**
  * Representa uma nota.
@@ -16,9 +15,12 @@ import io.swagger.annotations.ApiModelProperty;
  * Representa uma nota.
  */
 @ApiModel(description = "Representa uma nota.")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-09-19T11:35:00.727-03:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-11-02T14:35:59.963-02:00")
 
 public class Nota   {
+  @JsonProperty("idProduto")
+  private Long idProduto = null;
+
   @JsonProperty("maiorNota")
   private Long maiorNota = null;
 
@@ -27,6 +29,24 @@ public class Nota   {
 
   @JsonProperty("menorNota")
   private Long menorNota = null;
+
+  public Nota idProduto(Long idProduto) {
+    this.idProduto = idProduto;
+    return this;
+  }
+
+   /**
+   * Identificador do produto.
+   * @return idProduto
+  **/
+  @ApiModelProperty(value = "Identificador do produto.")
+  public Long getIdProduto() {
+    return idProduto;
+  }
+
+  public void setIdProduto(Long idProduto) {
+    this.idProduto = idProduto;
+  }
 
   public Nota maiorNota(Long maiorNota) {
     this.maiorNota = maiorNota;
@@ -92,14 +112,15 @@ public class Nota   {
       return false;
     }
     Nota nota = (Nota) o;
-    return Objects.equals(this.maiorNota, nota.maiorNota) &&
+    return Objects.equals(this.idProduto, nota.idProduto) &&
+        Objects.equals(this.maiorNota, nota.maiorNota) &&
         Objects.equals(this.media, nota.media) &&
         Objects.equals(this.menorNota, nota.menorNota);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(maiorNota, media, menorNota);
+    return Objects.hash(idProduto, maiorNota, media, menorNota);
   }
 
   @Override
@@ -107,6 +128,7 @@ public class Nota   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Nota {\n");
     
+    sb.append("    idProduto: ").append(toIndentedString(idProduto)).append("\n");
     sb.append("    maiorNota: ").append(toIndentedString(maiorNota)).append("\n");
     sb.append("    media: ").append(toIndentedString(media)).append("\n");
     sb.append("    menorNota: ").append(toIndentedString(menorNota)).append("\n");

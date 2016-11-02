@@ -18,6 +18,7 @@ import com.marceltessarini.lojavirtual.rs.exception.QueryStringException;
 import com.marceltessarini.lojavirtual.rs.exception.RankingException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Metadata;
+import com.marceltessarini.lojavirtual.rs.model.Nota;
 import com.marceltessarini.lojavirtual.rs.model.Produto;
 import com.marceltessarini.lojavirtual.rs.model.Ranking;
 import com.marceltessarini.lojavirtual.rs.model.Rankings;
@@ -181,6 +182,17 @@ public class RankingApiServiceImpl implements RankingApiService {
 	public ResponseEntity<Ranking> getRanking(Long idRanking) {
 		Ranking r1 = criarRanking(idRanking, 50L, 8, "Bom livro");
 		ResponseEntity<Ranking> response = new ResponseEntity<Ranking>(r1, HttpStatus.OK);
+		return response;
+	}
+
+	@Override
+	public ResponseEntity<Nota> getNotasDoProduto(Long idProduto) {
+		Nota nota = new Nota();
+		nota.setIdProduto(idProduto);
+		nota.setMaiorNota(10L);
+		nota.setMenorNota(3L);
+		nota.setMedia(7L);
+		ResponseEntity<Nota> response = new ResponseEntity<Nota>(nota, HttpStatus.OK);
 		return response;
 	}
 
