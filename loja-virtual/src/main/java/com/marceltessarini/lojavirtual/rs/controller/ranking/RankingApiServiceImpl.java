@@ -33,7 +33,7 @@ public class RankingApiServiceImpl implements RankingApiService {
 		Long idProduto = request.getIdProduto();
 		// -----------------------------------------------------------
 		// Fake
-		simmulandoProblemasComSeguranca(idProduto );
+		simmulandoProblemasComSeguranca(idProduto);
 		
 		Rankings rankings = criarRankings(idProduto);
 		
@@ -146,6 +146,8 @@ public class RankingApiServiceImpl implements RankingApiService {
 		// simulando, fake!
 		Long idProduto = ranking.getIdProduto();
 		simulandoErroAoSalvar(idProduto);
+		
+		simmulandoProblemasComSeguranca(idProduto);
 		// ------------------------------
 		ResponseEntity<Void> response = adicionarRanking(ranking);
 		return response;
@@ -173,6 +175,13 @@ public class RankingApiServiceImpl implements RankingApiService {
 		MultiValueMap<String, String> headers = new HttpHeaders();
 		headers.add("Location", location);
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+	}
+
+	@Override
+	public ResponseEntity<Ranking> getRanking(Long idRanking) {
+		Ranking r1 = criarRanking(idRanking, 50L, 8, "Bom livro");
+		ResponseEntity<Ranking> response = new ResponseEntity<Ranking>(r1, HttpStatus.OK);
+		return response;
 	}
 
 

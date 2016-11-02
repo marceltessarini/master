@@ -11,4 +11,6 @@ public interface RankingApiService {
 
 	ResponseEntity<Void> salvar(Ranking ranking);
 
+	ResponseEntity<Ranking> getRanking(Long idRanking);
+
 }

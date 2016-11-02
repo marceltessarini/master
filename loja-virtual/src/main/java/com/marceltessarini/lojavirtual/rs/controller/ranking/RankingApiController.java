@@ -5,11 +5,14 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.marceltessarini.lojavirtual.rs.model.Nota;
 import com.marceltessarini.lojavirtual.rs.model.Ranking;
 import com.marceltessarini.lojavirtual.rs.model.Rankings;
+
+import io.swagger.annotations.ApiParam;
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-11-02T10:32:41.079-02:00")
@@ -34,9 +37,10 @@ public class RankingApiController implements RankingApi {
 	 * Obtem um ranking.
 	 */
 	@Override
-	public ResponseEntity<Ranking> rankingIdRankingGet(Long idRanking) {
-		// TODO Auto-generated method stub
-		return null;
+	public ResponseEntity<Ranking> rankingIdRankingGet(
+			@ApiParam(value = "Identificador do Ranking.", required = true) @PathVariable("idRanking") Long idRanking) {
+		ResponseEntity<Ranking> response = rankingApiService.getRanking(idRanking);
+		return response;
 	}
 
 	@Override
