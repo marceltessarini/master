@@ -510,8 +510,7 @@
             "in": "query",
             "description": "Recebe o(s) nome(s) do(s) campo(s) do ranking do produto  a ser ordenado. Campos disponível são: nota",
             "required": false,
-            "type": "integer",
-            "format": "int32",
+            "type": "string"
             "x-example": "order=nota"
           },
           {
