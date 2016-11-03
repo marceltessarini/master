@@ -1,11 +1,11 @@
 package com.marceltessarini.lojavirtual.negocio.dao;
 
-public interface CrudRepository <E, ID> {
+import java.io.Serializable;
+
+public interface BasicRepository <E, ID extends Serializable> {
 
 	E get(ID id);
 	
 	E save(E entity);
-	
-	void delete(ID id);
 	
 }
