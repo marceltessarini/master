@@ -9,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
@@ -19,12 +21,12 @@ import com.marceltessarini.lojavirtual.rs.exception.RankingException;
 import com.marceltessarini.lojavirtual.rs.model.Erro;
 import com.marceltessarini.lojavirtual.rs.model.Metadata;
 import com.marceltessarini.lojavirtual.rs.model.Nota;
-import com.marceltessarini.lojavirtual.rs.model.Produto;
 import com.marceltessarini.lojavirtual.rs.model.Ranking;
 import com.marceltessarini.lojavirtual.rs.model.Rankings;
 import com.marceltessarini.lojavirtual.rs.utils.PaginacaoUtils;
 
 @Service
+@Transactional(propagation = Propagation.NEVER)
 public class RankingApiServiceImpl implements RankingApiService {
 
 	@Override

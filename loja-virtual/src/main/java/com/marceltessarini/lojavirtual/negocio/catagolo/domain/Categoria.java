@@ -7,20 +7,23 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
-public class Catalogo {
+@Table(name = "categoria")
+public class Categoria {
 
 	@Id
-	@SequenceGenerator(name="sq_catalogo")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sq_catalogo")
+	@SequenceGenerator(name="sq_categoria")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sq_categoria")
 	private Long id;
 	private String nome;
 	private String descricao;
+	private String status;
 	
 	@ManyToOne
-	@JoinColumn(name = "idCatalogo")
-	private Catalogo catalogo;
+	@JoinColumn(name = "idCategoria")
+	private Categoria categoriaMae;
 
 	public Long getId() {
 		return id;
@@ -46,12 +49,20 @@ public class Catalogo {
 		this.descricao = descricao;
 	}
 
-	public Catalogo getCatalogo() {
-		return catalogo;
+	public Categoria getCategoriaMae() {
+		return categoriaMae;
 	}
 
-	public void setCatalogo(Catalogo catalogo) {
-		this.catalogo = catalogo;
+	public void setCategoriaMae(Categoria categoriaMae) {
+		this.categoriaMae = categoriaMae;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

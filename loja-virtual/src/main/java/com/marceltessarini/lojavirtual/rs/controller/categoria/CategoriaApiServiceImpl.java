@@ -4,13 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 
+import com.marceltessarini.lojavirtual.negocio.catagolo.service.api.CatalogoService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
@@ -29,7 +36,11 @@ import com.marceltessarini.lojavirtual.rs.utils.PaginacaoUtils;
  *
  */
 @Service
+@Transactional(propagation = Propagation.NEVER)
 public class CategoriaApiServiceImpl implements CategoriaApiService {
+	
+	@Autowired
+	private CatalogoService catalogoService; 
 
 	@Override
 	public ResponseEntity<Categorias> getCategorias(GetCategoriasRequest request) {
@@ -170,18 +181,55 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 
 	@Override
 	public ResponseEntity<Void> salvar(Categoria categoria) {
+		// TODO melhorar codigo
 		validarCategoria(categoria);
 		
-		Long id = categoria.getId();
-		if (id == null) {
-			// Adicionar
-			ResponseEntity<Void> responseAdicionar = adicionarCategoria(categoria);
-			return responseAdicionar;
-		} else {
-			// Atualizar
-			ResponseEntity<Void> responseAtualizar = atualizarCategoria(categoria);
-			return responseAtualizar;
+		com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria c = criarCategoria(categoria);
+		
+		com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria categoriaSalva;
+		try {
+			categoriaSalva = catalogoService.salvar(c);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
+		
+		Long idCategoriaSalva = categoriaSalva.getId();
+		
+		String location = "/api/loja/v1/categorias/" + idCategoriaSalva;
+		MultiValueMap<String, String> headers = new HttpHeaders();
+		headers.add("Location", location);
+		ResponseEntity<Void> response =  new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+
+		return response;
+		
+	}
+
+	private com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria criarCategoria(Categoria categoria) {
+		Long id = categoria.getId();
+		String nome = categoria.getNome();
+		String descricao = categoria.getDescricao();
+		String status = categoria.getStatus();
+		Long idCategoriaMae = categoria.getIdCategoria();
+		
+		com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria categoriaMae = null;
+		if (idCategoriaMae != null) {
+			categoriaMae = new com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria();
+			categoriaMae.setId(idCategoriaMae);
+		}
+		
+		if (status == null) {
+			status = "ATIVO";
+		}
+		
+		com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria categoriaCriada = new com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria();
+		categoriaCriada.setId(id);
+		categoriaCriada.setDescricao(descricao);
+		categoriaCriada.setCategoriaMae(categoriaMae);
+		categoriaCriada.setNome(nome);
+		categoriaCriada.setStatus(status);
+		
+		return categoriaCriada;
 	}
 
 	private ResponseEntity<Void> atualizarCategoria(Categoria categoria) {
