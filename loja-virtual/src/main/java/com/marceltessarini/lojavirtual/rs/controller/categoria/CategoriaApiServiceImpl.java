@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.EntityNotFoundException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 
-import com.marceltessarini.lojavirtual.negocio.catagolo.service.api.CatalogoService;
+import com.marceltessarini.lojavirtual.negocio.catagolo.service.api.CategoriaService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService;
 import com.marceltessarini.lojavirtual.rs.codigo.CodigoAPIService.CodigoStatusAPI;
 import com.marceltessarini.lojavirtual.rs.exception.ApiSecurityException;
@@ -40,7 +39,7 @@ import com.marceltessarini.lojavirtual.rs.utils.PaginacaoUtils;
 public class CategoriaApiServiceImpl implements CategoriaApiService {
 	
 	@Autowired
-	private CatalogoService catalogoService; 
+	private CategoriaService catalogoService; 
 
 	@Override
 	public ResponseEntity<Categorias> getCategorias(GetCategoriasRequest request) {
@@ -185,13 +184,15 @@ public class CategoriaApiServiceImpl implements CategoriaApiService {
 		validarCategoria(categoria);
 		
 		com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria c = criarCategoria(categoria);
-		
-		com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria categoriaSalva;
+		com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria categoriaSalva = null;
 		try {
 			categoriaSalva = catalogoService.salvar(c);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
+		} catch (EntityNotFoundException e) {
+			// Categoria mae nao encontrada!
+			String[] parametros = null;
+			CodigoStatusAPI chaveErro = CodigoStatusAPI.CATEGORIA_001_004;
+			Erro erroMaeNaoEncontrada = CodigoAPIService.criarErro(chaveErro, parametros);
+			CategoriaException.lancarSeTiverErro(erroMaeNaoEncontrada);
 		}
 		
 		Long idCategoriaSalva = categoriaSalva.getId();

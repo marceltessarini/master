@@ -2,8 +2,8 @@ package com.marceltessarini.lojavirtual.negocio.catagolo.service.api;
 
 import com.marceltessarini.lojavirtual.negocio.catagolo.domain.Categoria;
 
-public interface CatalogoService {
+public interface CategoriaService {
 
-	Categoria salvar(Categoria catalogo);
+	Categoria salvar(Categoria categoria);
 	
 }
