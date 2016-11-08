@@ -14,15 +14,15 @@ import javax.persistence.Table;
 public class Categoria {
 
 	@Id
-	@SequenceGenerator(name="sq_categoria")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="sq_categoria")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="sq_categoria")
+    @SequenceGenerator(name="sq_categoria", sequenceName="sq_categoria", allocationSize=1)
 	private Long id;
 	private String nome;
 	private String descricao;
 	private String status;
 	
 	@ManyToOne
-	@JoinColumn(name = "idCategoria")
+	@JoinColumn(name = "id_categoria")
 	private Categoria categoriaMae;
 
 	public Long getId() {

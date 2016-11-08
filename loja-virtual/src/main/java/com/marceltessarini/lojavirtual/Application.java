@@ -1,4 +1,4 @@
-package io.swagger;
+package com.marceltessarini.lojavirtual;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.ExitCodeGenerator;
