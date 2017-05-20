@@ -16,11 +16,11 @@ public class Sender {
 
 	@Bean
 	Queue queue() {
-		return new Queue("CustomerQ", false);
+		return new Queue("ClienteQ", false);
 	}
 
 	public void send(String message) {
-		template.convertAndSend("CustomerQ", message);
+		template.convertAndSend("ClienteQ", message);
 	}
 
 }
